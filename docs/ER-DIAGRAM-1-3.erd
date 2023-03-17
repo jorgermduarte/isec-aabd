@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram version="1" name="ER-DIAGRAM-1-3.erd">
+	<entities>
+		<data-source id="oracle_thin-186f0f4148b-18306c4006b08323">
+			<entity id="1" name="BUNDLE" fq-name="ANONYMOUS.BUNDLE" order="0" x="636" y="945">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="2" name="BUNDLE_CONTRACT" fq-name="ANONYMOUS.BUNDLE_CONTRACT" order="1" x="870" y="1346">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="3" name="CALL_STATUS_TYPE" fq-name="ANONYMOUS.CALL_STATUS_TYPE" order="2" x="1123" y="175">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="4" name="CAMPAIGN" fq-name="ANONYMOUS.CAMPAIGN" order="3" x="261" y="1089">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="5" name="CLIENT" fq-name="ANONYMOUS.CLIENT" order="4" x="625" y="646">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="6" name="CLIENT_CALL" fq-name="ANONYMOUS.CLIENT_CALL" order="5" x="942" y="440">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="7" name="CLIENT_CALL_HISTORY" fq-name="ANONYMOUS.CLIENT_CALL_HISTORY" order="6" x="781" y="174">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="8" name="CLIENT_CAMPAIGN" fq-name="ANONYMOUS.CLIENT_CAMPAIGN" order="7" x="364" y="909">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="9" name="CLIENT_STATUS" fq-name="ANONYMOUS.CLIENT_STATUS" order="8" x="364" y="550">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="10" name="COMMUNICATION_TYPE" fq-name="ANONYMOUS.COMMUNICATION_TYPE" order="9" x="578" y="1326">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="11" name="CONTRACT" fq-name="ANONYMOUS.CONTRACT" order="10" x="1133" y="1140">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="12" name="INVOICE" fq-name="ANONYMOUS.INVOICE" order="11" x="1370" y="1252">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="13" name="NETWORK" fq-name="ANONYMOUS.NETWORK" order="12" x="1283" y="528">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="14" name="NOTIFICATION" fq-name="ANONYMOUS.NOTIFICATION" order="13" x="280" y="718">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="15" name="NOTIFICATION_STATUS" fq-name="ANONYMOUS.NOTIFICATION_STATUS" order="14" x="104" y="515">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="16" name="PLAN" fq-name="ANONYMOUS.PLAN" order="15" x="1417" y="930">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="17" name="PLAN_TARRIF" fq-name="ANONYMOUS.PLAN_TARRIF" order="16" x="1397" y="758">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="18" name="PLAN_TYPE" fq-name="ANONYMOUS.PLAN_TYPE" order="17" x="1611" y="746">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="19" name="SMS" fq-name="ANONYMOUS.SMS" order="18" x="422" y="322">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="20" name="SMS_HISTORY" fq-name="ANONYMOUS.SMS_HISTORY" order="19" x="219" y="187">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="21" name="SMS_STATUS_TYPE" fq-name="ANONYMOUS.SMS_STATUS_TYPE" order="20" x="517" y="173">
+				<path name="ANONYMOUS"/>
+			</entity>
+			<entity id="22" name="TARRIF" fq-name="ANONYMOUS.TARRIF" order="21" x="1135" y="816">
+				<path name="ANONYMOUS"/>
+			</entity>
+		</data-source>
+	</entities>
+	<relations>
+		<relation name="FK_BUNDLE_CONTRACT_ID_BUNDLE" fq-name="ANONYMOUS.BUNDLE_CONTRACT.FK_BUNDLE_CONTRACT_ID_BUNDLE" type="fk" pk-ref="1" fk-ref="2"/>
+		<relation name="FK_CLIENT_CALL_ID_STATUS_TYPE" fq-name="ANONYMOUS.CLIENT_CALL.FK_CLIENT_CALL_ID_STATUS_TYPE" type="fk" pk-ref="3" fk-ref="6"/>
+		<relation name="FK_CLIENT_CALL_HISTORY_ID_STATUS_TYPE" fq-name="ANONYMOUS.CLIENT_CALL_HISTORY.FK_CLIENT_CALL_HISTORY_ID_STATUS_TYPE" type="fk" pk-ref="3" fk-ref="7"/>
+		<relation name="FK_CLIENT_CAMPAIGN_ID_CAMPAIGN" fq-name="ANONYMOUS.CLIENT_CAMPAIGN.FK_CLIENT_CAMPAIGN_ID_CAMPAIGN" type="fk" pk-ref="4" fk-ref="8"/>
+		<relation name="FK_CLIENT_CALL_ID_CLIENT" fq-name="ANONYMOUS.CLIENT_CALL.FK_CLIENT_CALL_ID_CLIENT" type="fk" pk-ref="5" fk-ref="6"/>
+		<relation name="FK_CLIENT_CAMPAIGN_ID_CLIENT_ASSOCIATED" fq-name="ANONYMOUS.CLIENT_CAMPAIGN.FK_CLIENT_CAMPAIGN_ID_CLIENT_ASSOCIATED" type="fk" pk-ref="5" fk-ref="8"/>
+		<relation name="FK_CLIENT_CAMPAIGN_ID_CLIENT_GROUP_OWNER" fq-name="ANONYMOUS.CLIENT_CAMPAIGN.FK_CLIENT_CAMPAIGN_ID_CLIENT_GROUP_OWNER" type="fk" pk-ref="5" fk-ref="8"/>
+		<relation name="FK_CONTRACT_ID_CLIENT" fq-name="ANONYMOUS.CONTRACT.FK_CONTRACT_ID_CLIENT" type="fk" pk-ref="5" fk-ref="11"/>
+		<relation name="FK_NOTIFICATION_ID_CLIENT" fq-name="ANONYMOUS.NOTIFICATION.FK_NOTIFICATION_ID_CLIENT" type="fk" pk-ref="5" fk-ref="14"/>
+		<relation name="FK_SMS_ID_CLIENT" fq-name="ANONYMOUS.SMS.FK_SMS_ID_CLIENT" type="fk" pk-ref="5" fk-ref="19"/>
+		<relation name="FK_CLIENT_CALL_HISTORY_ID_CALL" fq-name="ANONYMOUS.CLIENT_CALL_HISTORY.FK_CLIENT_CALL_HISTORY_ID_CALL" type="fk" pk-ref="6" fk-ref="7"/>
+		<relation name="CLIENT_ID_STATUS_TYPE" fq-name="ANONYMOUS.CLIENT.CLIENT_ID_STATUS_TYPE" type="fk" pk-ref="9" fk-ref="5"/>
+		<relation name="FK_BUNDLE_ID_COMMUNICATION_TYPE" fq-name="ANONYMOUS.BUNDLE.FK_BUNDLE_ID_COMMUNICATION_TYPE" type="fk" pk-ref="10" fk-ref="1"/>
+		<relation name="FK_TARRIF_ID_COMMUNICATION_TYPE" fq-name="ANONYMOUS.TARRIF.FK_TARRIF_ID_COMMUNICATION_TYPE" type="fk" pk-ref="10" fk-ref="22"/>
+		<relation name="FK_BUNDLE_CONTRACT_ID_CONTRACT" fq-name="ANONYMOUS.BUNDLE_CONTRACT.FK_BUNDLE_CONTRACT_ID_CONTRACT" type="fk" pk-ref="11" fk-ref="2"/>
+		<relation name="FK_INVOICE_ID_CONTRACT" fq-name="ANONYMOUS.INVOICE.FK_INVOICE_ID_CONTRACT" type="fk" pk-ref="11" fk-ref="12"/>
+		<relation name="FK_BUNDLE_ID_NETWORK" fq-name="ANONYMOUS.BUNDLE.FK_BUNDLE_ID_NETWORK" type="fk" pk-ref="13" fk-ref="1"/>
+		<relation name="FK_CLIENT_CALL_ID_NETWORK" fq-name="ANONYMOUS.CLIENT_CALL.FK_CLIENT_CALL_ID_NETWORK" type="fk" pk-ref="13" fk-ref="6"/>
+		<relation name="FK_TARRIF_ID_TARRIF_NETWORK" fq-name="ANONYMOUS.TARRIF.FK_TARRIF_ID_TARRIF_NETWORK" type="fk" pk-ref="13" fk-ref="22"/>
+		<relation name="FK_NOTIFICATION_ID_STATUS" fq-name="ANONYMOUS.NOTIFICATION.FK_NOTIFICATION_ID_STATUS" type="fk" pk-ref="15" fk-ref="14"/>
+		<relation name="FK_CONTRACT_ID_PLAN" fq-name="ANONYMOUS.CONTRACT.FK_CONTRACT_ID_PLAN" type="fk" pk-ref="16" fk-ref="11"/>
+		<relation name="FK_PLAN_TARRIF_ID_PLAN" fq-name="ANONYMOUS.PLAN_TARRIF.FK_PLAN_TARRIF_ID_PLAN" type="fk" pk-ref="16" fk-ref="17"/>
+		<relation name="FK_PLAN_ID_PLAN_TYPE" fq-name="ANONYMOUS.PLAN.FK_PLAN_ID_PLAN_TYPE" type="fk" pk-ref="18" fk-ref="16"/>
+		<relation name="FK_SMS_HISTORY_ID_SMS" fq-name="ANONYMOUS.SMS_HISTORY.FK_SMS_HISTORY_ID_SMS" type="fk" pk-ref="19" fk-ref="20"/>
+		<relation name="FK_SMS_ID_STATUS_TYPE" fq-name="ANONYMOUS.SMS.FK_SMS_ID_STATUS_TYPE" type="fk" pk-ref="21" fk-ref="19"/>
+		<relation name="FK_SMS_HISTORY_ID_STATUS_TYPE" fq-name="ANONYMOUS.SMS_HISTORY.FK_SMS_HISTORY_ID_STATUS_TYPE" type="fk" pk-ref="21" fk-ref="20"/>
+		<relation name="FK_PLAN_TARRIF_ID_TARRIF" fq-name="ANONYMOUS.PLAN_TARRIF.FK_PLAN_TARRIF_ID_TARRIF" type="fk" pk-ref="22" fk-ref="17"/>
+	</relations>
+</diagram>
