@@ -35,3 +35,10 @@ A simple xe oracle database instance to study PL/SQL.
     if you acess via website use the following container name:
     CDB$ROOT
 ```
+
+
+
+## Attachments
+
+![image](https://user-images.githubusercontent.com/45755132/225426113-9c270bac-ac94-464d-9d04-c19c71a01289.png)
+![image](https://user-images.githubusercontent.com/45755132/225426275-54cc94de-8700-4b1c-b556-a182adb2b9b4.png)
