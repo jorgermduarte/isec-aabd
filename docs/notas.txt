@@ -1,5 +1,5 @@
-- falta-me o diagrama de tabelas
-- passar os numeros normalized para strings na mesma
+- acho melhor ter os normalized phone numbers como string
+
 
 - view que informe se um determinado cliente tem pacotes, planos, tarifarios, quantos, total_sms disponivel, total chamdas voz disponivel e custo por sms e chamada
 - view de calculos de revenues

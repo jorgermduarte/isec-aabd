@@ -1,6 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<SchemaObject class="oracle.dbtools.crest.model.design.relational.SchemaObject" name="ANONYMOUS" directorySegmentName="seg_0" id="C52E648C-C853-A179-77E4-7B8885A66D72">
-<createdBy>duarte</createdBy>
-<createdTime>2023-03-18 16:52:37 UTC</createdTime>
-<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
-</SchemaObject>

@@ -1,0 +1,4 @@
+Além das views já implementadas, acho importante tem as seguintes views:
+
+- view que que obtenha dos clientes se estes tem pacotes, planos, tarifarios, quantos, total_sms disponivel, total chamdas voz disponivel e custo por sms e chamada
+- view de calculos de revenues / function ( diria mais uma function) que depois será chamada por um trigger
