@@ -1,0 +1,83 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="CAMPAIGN" directorySegmentName="seg_0" id="4BECC0A8-70CB-D4D7-E538-642BE5E2B3C2">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>4979FD65-B2E3-296D-5847-62A21B2BFE98</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DISCOUNT_SMS_PERCENTAGE" id="082CA31A-2778-4109-59AB-88A466A4B77F">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DISCOUNT_VOICE_PERCENTAGE" id="0BBA48C4-09E7-9EC7-DB1A-D983602D08E0">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MAX_FRIENDS" id="2ADF9E0E-F8A5-953F-788B-338AF0E6BDFF">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CREATION_DATE" id="41F041E5-CECD-76A4-B018-DD83E82D7766">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="ENABLED" id="4EC67DF8-96B2-8428-40C7-9F9351305721">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="DESIGNATION" id="6C025835-D373-72E9-BBD8-B53DF7E993D5">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_CAMPAIGN" id="7BD695C2-3736-FEED-96FC-F598FE6C8FC3">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<autoIncrementDDL>IDENTITY_CLAUSE</autoIncrementDDL>
+</ColumnProxy>
+<ColumnProxy name="NAME" id="8CF4A0F4-FF3D-C298-5EDC-05F1DCF6F1DE">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="START_DATE" id="B9A2AA56-15E3-598A-ABBE-41F7B5C4667E">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="END_DATE" id="CBD25736-FC58-3214-509D-6E6F1409B70A">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="CAMPAIGN_PK" id="714D2283-884E-94E7-D554-F1735DBAA86C">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<segment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<indexSegment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>

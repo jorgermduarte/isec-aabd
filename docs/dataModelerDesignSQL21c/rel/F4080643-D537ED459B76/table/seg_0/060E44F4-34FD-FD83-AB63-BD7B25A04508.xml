@@ -1,0 +1,111 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="060E44F4-34FD-FD83-AB63-BD7B25A04508" schemaObject="C52E648C-C853-A179-77E4-7B8885A66D72" name="NOTIFICATION_STATUS">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>NOTIFICATION_STATUS</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_NOTIFICATION_STATUS" id="035473C9-212B-F038-7AD0-06294450B7FE">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>NOTIFICATION_STATUS</sourceObjSchema>
+<sourceObjName>ID_NOTIFICATION_STATUS</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NAME" id="CC391FEC-6EDA-464E-070B-9A79C7652370">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>NOTIFICATION_STATUS</sourceObjSchema>
+<sourceObjName>NAME</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CREATION_DATE" id="675B21D9-CE35-0D90-C80E-3BBB1586E927">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>NOTIFICATION_STATUS</sourceObjSchema>
+<sourceObjName>CREATION_DATE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DELETED" id="02937071-0315-6C54-6C03-74AE69B82A28">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>NOTIFICATION_STATUS</sourceObjSchema>
+<sourceObjName>DELETED</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B24B769F-0EAE-4741-9224-0554BCCCF658" schemaObject="C52E648C-C853-A179-77E4-7B8885A66D72" name="NOTIFICATION_STATUS_PK">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>SYS_C008534</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="035473C9-212B-F038-7AD0-06294450B7FE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0C9E6063-B029-87A7-4AAF-675C08F91694" schemaObject="C52E648C-C853-A179-77E4-7B8885A66D72" name="IDX_NOTIFICATION_STATUS_NAME">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>IDX_NOTIFICATION_STATUS_NAME</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CC391FEC-6EDA-464E-070B-9A79C7652370"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

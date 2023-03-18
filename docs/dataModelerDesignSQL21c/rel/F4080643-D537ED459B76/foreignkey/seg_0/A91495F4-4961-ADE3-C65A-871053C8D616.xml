@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="A91495F4-4961-ADE3-C65A-871053C8D616" containerWithKeyObject="22208933-EF74-695B-587B-81396DCF28A6" localFKIndex="73A9A4F5-8907-5F12-F8F5-6AECFB5A3C55" name="FK_PLAN_TARRIF_ID_TARRIF">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>FK_PLAN_TARRIF_ID_TARRIF</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<referredTableLongName>ANONYMOUS.TARRIF</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>947ED4BC-6D62-83BF-A828-AFA5CE0B7698</referredTableID>
+<keyObject>35634B32-5664-FE18-4AE5-C63DFCCB5D99</keyObject>
+<referredKeyID>35634B32-5664-FE18-4AE5-C63DFCCB5D99</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_TARRIF</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

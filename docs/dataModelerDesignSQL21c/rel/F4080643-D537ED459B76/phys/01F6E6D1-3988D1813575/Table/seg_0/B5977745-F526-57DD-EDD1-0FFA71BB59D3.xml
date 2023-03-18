@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="CLIENT_CALL" directorySegmentName="seg_0" id="B5977745-F526-57DD-EDD1-0FFA71BB59D3">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>F3F5D344-64A1-E641-0B89-8D5783308422</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="CREATION_DATE" id="28CD0AFA-E9BB-D1D3-BF56-B93B0AA0C232">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CALL_COMPLETED_DATE" id="38811FAF-8195-4884-CAFD-D1D791F90034">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_CLIENT" id="42F2B6FF-FFCC-0999-B28F-DA0E34129F83">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TARGET_NUMBER" id="4774DD2C-646A-68E6-955D-AE56E1ACEA9E">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MODIFICATION_DATE" id="89B61248-86DE-C22C-5776-1294AFA366D0">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="DURATION" id="8E42E738-B24B-60D7-6F80-8F1D370ACC3A">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_NETWORK" id="9AD570B3-9E50-75DD-D0C1-CAE68C9C1D21">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_CALL" id="A97594EC-963A-F5F3-CD9B-A7B2CF7EEF5B">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<autoIncrementDDL>IDENTITY_CLAUSE</autoIncrementDDL>
+</ColumnProxy>
+<ColumnProxy name="COST_VALUE" id="C7E7E1D2-6778-2A83-91A4-44AA4B67B50B">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_STATUS_TYPE" id="D1858515-505E-1780-8AE0-48F722A61D96">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CALL_ACCEPTED" id="EA095F5B-099E-3B81-C4A4-820551CEDCA5">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CALL_ACCEPTED_DATE" id="F3B55EF7-10DA-8A97-7C5C-CBD2E147CFC4">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CALL_ATTEMPTED_SECONDS" id="F5EB63CF-EED2-1BAD-54BC-0630BE6B84CB">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CLIENT_CALL_ID_NETWORK" id="12AC00BD-7CD6-ACD6-A49D-80FCAEDDDD53">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CLIENT_CALL_ID_CLIENT" id="38D496D1-2A5F-93C4-C4EC-3D747C80333C">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CLIENT_CALL_ID_STATUS_TYPE" id="5997F751-A1D7-00E2-24C4-3699E678312E">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="CLIENT_CALL_PK" id="DDEE4FBB-4767-67E4-77A5-196530CBCC32">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<segment>4FD64E9B-2776-AC5B-1CC7-4F44624D7A3F</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<indexSegment>4FD64E9B-2776-AC5B-1CC7-4F44624D7A3F</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>

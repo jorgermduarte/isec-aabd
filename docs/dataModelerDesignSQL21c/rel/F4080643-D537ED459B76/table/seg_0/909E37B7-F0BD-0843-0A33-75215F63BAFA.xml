@@ -1,0 +1,235 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="909E37B7-F0BD-0843-0A33-75215F63BAFA" schemaObject="C52E648C-C853-A179-77E4-7B8885A66D72" name="BUNDLE">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>BUNDLE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_BUNDLE" id="1AB2EE0B-5430-0023-07AB-1A18AAD0C8D6">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>ID_BUNDLE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="ID_NETWORK" id="56714B0A-D049-A27E-A815-D16728A84342">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>ID_NETWORK</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8846E16C-1ADC-9C6B-59C1-C3290E0D65F0" referredColumn="911DB67B-8820-0EC1-E2FF-2FB855654979"/>
+</associations>
+</Column>
+<Column name="ID_COMMUNICATION_TYPE" id="C7636E95-0BA5-C67E-5B73-A48747646BB4">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>ID_COMMUNICATION_TYPE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8D52A123-21E3-7F12-9A15-73E379942BB7" referredColumn="A62A27DD-D0A9-1984-17A6-C6A3C1E2370F"/>
+</associations>
+</Column>
+<Column name="DESIGNATION" id="A0E446CB-8F9D-79F3-7A21-060487194A71">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>DESIGNATION</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LAUNCH_DATE" id="3FE25252-FF45-6610-622D-C7B19A066C8B">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>LAUNCH_DATE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRICE_VALUE" id="FDA07B7D-CD04-F199-D1CE-143ED70F0675">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>PRICE_VALUE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="QUANTITY" id="CF69C484-A94D-DDDD-83F2-961ADAAE7EFC">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>QUANTITY</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UNIT" id="E00C8BE9-38E3-1B2B-3175-1ED58757ABA7">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>UNIT</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PERIOD" id="0C344120-CB3C-4D63-9B67-B237B25B420F">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>PERIOD</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CREATION_DATE" id="83CD8943-6EF0-963A-2ECE-A3DC3B6401CE">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>CREATION_DATE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="IS_ACTIVE" id="7D289C19-6413-3C67-C8C6-7905AB86ED17">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>BUNDLE</sourceObjSchema>
+<sourceObjName>IS_ACTIVE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<defaultValue>1</defaultValue>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FC836AD4-D0D4-F99A-2520-B0C5057CDF43" schemaObject="C52E648C-C853-A179-77E4-7B8885A66D72" name="BUNDLE_PK">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>SYS_C008543</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:39 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1AB2EE0B-5430-0023-07AB-1A18AAD0C8D6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A9FBF557-21E0-4497-5FA9-A359B3CE2E29" name="FK_BUNDLE_ID_COMMUNICATION_TYPE">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C7636E95-0BA5-C67E-5B73-A48747646BB4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9E3B8683-915C-B49C-9C51-55ADD3B81790" name="FK_BUNDLE_ID_NETWORK">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="56714B0A-D049-A27E-A815-D16728A84342"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,148 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C93A8216-36DE-2E34-FC08-93C3AFF5AAC6" schemaObject="C52E648C-C853-A179-77E4-7B8885A66D72" name="CLIENT_CAMPAIGN">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>CLIENT_CAMPAIGN</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_CLIENT_CAMPAIGN" id="F4799C33-3363-8658-F6A4-8830D6D82117">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>CLIENT_CAMPAIGN</sourceObjSchema>
+<sourceObjName>ID_CLIENT_CAMPAIGN</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_CAMPAIGN" id="CA058625-7B61-5716-443D-EA703DE9A385">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>CLIENT_CAMPAIGN</sourceObjSchema>
+<sourceObjName>ID_CAMPAIGN</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D8ACBBAD-2310-2E74-D813-CAF617DFC43C" referredColumn="7BD695C2-3736-FEED-96FC-F598FE6C8FC3"/>
+</associations>
+</Column>
+<Column name="ID_CLIENT_GROUP_OWNER" id="54D61484-200A-775B-7A03-073DECF28C4B">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>CLIENT_CAMPAIGN</sourceObjSchema>
+<sourceObjName>ID_CLIENT_GROUP_OWNER</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="62C607EA-5B0D-B89F-BCCD-C9C7E6E0F63F" referredColumn="8E7FCC8A-21C9-EFED-095A-C161F605D2FF"/>
+</associations>
+</Column>
+<Column name="ID_CLIENT_ASSOCIATED" id="79081EE3-F5EE-07CB-DFA1-2C4BC2F7595A">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>CLIENT_CAMPAIGN</sourceObjSchema>
+<sourceObjName>ID_CLIENT_ASSOCIATED</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="368E204D-6437-FC29-CE41-CB413C100DF8" referredColumn="8E7FCC8A-21C9-EFED-095A-C161F605D2FF"/>
+</associations>
+</Column>
+<Column name="CREATION_DATE" id="BAA20532-AEE0-ABE1-9C4E-7A6D8B34774F">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>CLIENT_CAMPAIGN</sourceObjSchema>
+<sourceObjName>CREATION_DATE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="56892335-9685-920B-D398-7C81FE5E710D" schemaObject="C52E648C-C853-A179-77E4-7B8885A66D72" name="CLIENT_CAMPAIGN_PK">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>SYS_C008563</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F4799C33-3363-8658-F6A4-8830D6D82117"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5613DBEA-4C4C-695F-4AF6-B87A00F5B6D2" name="FK_CLIENT_CAMPAIGN_ID_CAMPAIGN">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CA058625-7B61-5716-443D-EA703DE9A385"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8F817569-CF68-93A1-3543-49F9C0CFA4FD" name="FK_CLIENT_CAMPAIGN_ID_CLIENT_ASSOCIATED">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="79081EE3-F5EE-07CB-DFA1-2C4BC2F7595A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E85BBC99-2D48-FE1D-BDC5-30B53CCD17FD" name="FK_CLIENT_CAMPAIGN_ID_CLIENT_GROUP_OWNER">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="54D61484-200A-775B-7A03-073DECF28C4B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

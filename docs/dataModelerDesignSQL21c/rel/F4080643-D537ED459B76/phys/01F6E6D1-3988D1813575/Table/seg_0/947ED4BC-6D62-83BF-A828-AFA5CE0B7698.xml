@@ -1,0 +1,125 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="TARRIF" directorySegmentName="seg_0" id="947ED4BC-6D62-83BF-A828-AFA5CE0B7698">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>4979FD65-B2E3-296D-5847-62A21B2BFE98</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="IS_ACTIVE" id="0756BA96-6D55-307B-33F7-4D07262448E3">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>1</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="LAUNCH_DATE" id="0D71FC1F-4CF6-D001-DDC0-C8895410256E">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UNIT_TYPE" id="1257A7A1-5155-95B5-FDA3-6D998E249DDA">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NAME" id="1A307A23-5F87-B4F8-BAE9-6BBB19A20A31">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DELETED" id="282D4CA8-22D8-BCF9-BBA5-C20F799666CC">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="ID_TARRIF" id="8331FDE4-564D-7498-913C-2386957867B8">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<autoIncrementDDL>IDENTITY_CLAUSE</autoIncrementDDL>
+</ColumnProxy>
+<ColumnProxy name="ID_COMMUNICATION_TYPE" id="93485D93-F313-8543-183C-A22961E1F78D">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MODIFICATION_DATE" id="94B57EA8-14FA-B1A5-3AB4-8483522BC63B">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="MONEY_PER_UNIT" id="C6B4A781-7365-F9FF-8B38-5485440513FC">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DESIGNATION" id="D96901FC-90DC-C1F0-8B07-9E52F8449D50">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_NETWORK" id="E9036D02-9B98-F1A7-99DD-C8436917F033">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CREATION_DATE" id="F3FD0E0B-17AC-1511-44FE-F15C402641BE">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="IDX_TARRIF_ID_NETWORK" id="4B0685CA-00F1-704E-64DF-7FE581755814">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<segment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+</IndexProxy>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="IDX_TARRIF_ID_COMMUNICATION_TYPE" id="BE260D79-8CDE-78CC-5A54-3B677025EBDD">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<segment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_TARRIF_ID_COMMUNICATION_TYPE" id="66964CD5-591A-26FB-6E74-4878C9160C0F">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_TARRIF_ID_TARRIF_NETWORK" id="C7A1511D-CE13-9D31-173F-98D0356ACFB0">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TARRIF_PK" id="35634B32-5664-FE18-4AE5-C63DFCCB5D99">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<segment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<indexSegment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>

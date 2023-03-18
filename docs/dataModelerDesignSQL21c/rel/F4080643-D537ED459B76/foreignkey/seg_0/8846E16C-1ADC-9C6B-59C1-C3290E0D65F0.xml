@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="8846E16C-1ADC-9C6B-59C1-C3290E0D65F0" containerWithKeyObject="909E37B7-F0BD-0843-0A33-75215F63BAFA" localFKIndex="9E3B8683-915C-B49C-9C51-55ADD3B81790" name="FK_BUNDLE_ID_NETWORK">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>FK_BUNDLE_ID_NETWORK</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<referredTableLongName>ANONYMOUS.NETWORK</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>D947146E-225B-26BD-E85B-35721154DD5F</referredTableID>
+<keyObject>8B87DDB3-8FFE-6A15-4AC8-2E031FC89718</keyObject>
+<referredKeyID>8B87DDB3-8FFE-6A15-4AC8-2E031FC89718</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_NETWORK</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

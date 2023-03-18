@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="9CEE11FB-FDC4-0C3E-BC17-7D1DC9FF8C87" containerWithKeyObject="316027E4-CFB6-4287-C544-329145E6C518" localFKIndex="76051C6C-89B2-B2E7-3117-9DFAF939B3F8" name="FK_BUNDLE_CONTRACT_ID_BUNDLE">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>FK_BUNDLE_CONTRACT_ID_BUNDLE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<referredTableLongName>ANONYMOUS.BUNDLE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>909E37B7-F0BD-0843-0A33-75215F63BAFA</referredTableID>
+<keyObject>FC836AD4-D0D4-F99A-2520-B0C5057CDF43</keyObject>
+<referredKeyID>FC836AD4-D0D4-F99A-2520-B0C5057CDF43</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_BUNDLE</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

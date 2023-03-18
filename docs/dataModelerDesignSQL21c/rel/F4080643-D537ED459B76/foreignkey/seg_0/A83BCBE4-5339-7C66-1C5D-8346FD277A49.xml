@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="A83BCBE4-5339-7C66-1C5D-8346FD277A49" containerWithKeyObject="43A4782A-B48C-0758-B448-3BB085711B45" localFKIndex="C785F741-6828-E2DE-6344-E3537723486B" name="FK_SMS_ID_CLIENT">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>FK_SMS_ID_CLIENT</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<referredTableLongName>ANONYMOUS.CLIENT</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>F1DB4BEE-7F3A-2151-A2C1-571DD64C1C91</referredTableID>
+<keyObject>CBC0F279-0FF4-57A6-E13E-A9D3AC600F53</keyObject>
+<referredKeyID>CBC0F279-0FF4-57A6-E13E-A9D3AC600F53</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_CLIENT</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

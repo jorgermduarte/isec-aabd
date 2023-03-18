@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="1A0850AE-3833-F504-0C9A-8C559C97722C" containerWithKeyObject="5C42CAA6-AF3C-D39C-0C8A-1F6AA62F2EAC" localFKIndex="EEF950D2-2C6E-041B-4BC5-0E382BEE1001" name="FK_NOTIFICATION_ID_STATUS">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>FK_NOTIFICATION_ID_STATUS</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<referredTableLongName>ANONYMOUS.NOTIFICATION_STATUS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>060E44F4-34FD-FD83-AB63-BD7B25A04508</referredTableID>
+<keyObject>B24B769F-0EAE-4741-9224-0554BCCCF658</keyObject>
+<referredKeyID>B24B769F-0EAE-4741-9224-0554BCCCF658</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_NOTIFICATION_STATUS</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

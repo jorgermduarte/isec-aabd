@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="BUNDLE" directorySegmentName="seg_0" id="909E37B7-F0BD-0843-0A33-75215F63BAFA">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>4979FD65-B2E3-296D-5847-62A21B2BFE98</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="PERIOD" id="0C344120-CB3C-4D63-9B67-B237B25B420F">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_BUNDLE" id="1AB2EE0B-5430-0023-07AB-1A18AAD0C8D6">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<autoIncrementDDL>IDENTITY_CLAUSE</autoIncrementDDL>
+</ColumnProxy>
+<ColumnProxy name="LAUNCH_DATE" id="3FE25252-FF45-6610-622D-C7B19A066C8B">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_NETWORK" id="56714B0A-D049-A27E-A815-D16728A84342">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="IS_ACTIVE" id="7D289C19-6413-3C67-C8C6-7905AB86ED17">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>1</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CREATION_DATE" id="83CD8943-6EF0-963A-2ECE-A3DC3B6401CE">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="DESIGNATION" id="A0E446CB-8F9D-79F3-7A21-060487194A71">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_COMMUNICATION_TYPE" id="C7636E95-0BA5-C67E-5B73-A48747646BB4">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="QUANTITY" id="CF69C484-A94D-DDDD-83F2-961ADAAE7EFC">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UNIT" id="E00C8BE9-38E3-1B2B-3175-1ED58757ABA7">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PRICE_VALUE" id="FDA07B7D-CD04-F199-D1CE-143ED70F0675">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:37 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_BUNDLE_ID_NETWORK" id="9E3B8683-915C-B49C-9C51-55ADD3B81790">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_BUNDLE_ID_COMMUNICATION_TYPE" id="A9FBF557-21E0-4497-5FA9-A359B3CE2E29">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="BUNDLE_PK" id="FC836AD4-D0D4-F99A-2520-B0C5057CDF43">
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:41 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+<segment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</segment>
+<tableSpace>3613DFFE-8703-E044-57D3-7E8E88D53632</tableSpace>
+<indexSegment>30A551B3-EE57-6B9B-FF69-DE821D0F069D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>

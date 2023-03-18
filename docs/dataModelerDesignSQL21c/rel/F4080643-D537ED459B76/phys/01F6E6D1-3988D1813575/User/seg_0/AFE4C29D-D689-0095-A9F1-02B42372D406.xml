@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="ANONYMOUS" directorySegmentName="seg_0" id="AFE4C29D-D689-0095-A9F1-02B42372D406">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjName>ANONYMOUS</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:36 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<schemaObject>C52E648C-C853-A179-77E4-7B8885A66D72</schemaObject>
+</UserOraclev10g>

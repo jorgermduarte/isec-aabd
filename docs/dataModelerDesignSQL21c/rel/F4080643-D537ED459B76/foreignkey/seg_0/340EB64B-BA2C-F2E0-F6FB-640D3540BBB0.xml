@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="340EB64B-BA2C-F2E0-F6FB-640D3540BBB0" containerWithKeyObject="72BF9F7F-BEDA-CF3F-8D8F-DC87944BF82D" localFKIndex="419ACE4A-932D-E761-6D71-C0C83D24FA65" name="FK_SMS_HISTORY_ID_SMS">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>FK_SMS_HISTORY_ID_SMS</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<referredTableLongName>ANONYMOUS.SMS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>43A4782A-B48C-0758-B448-3BB085711B45</referredTableID>
+<keyObject>BABE182E-8A14-E90E-AD35-AD332B069707</keyObject>
+<referredKeyID>BABE182E-8A14-E90E-AD35-AD332B069707</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_SMS</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

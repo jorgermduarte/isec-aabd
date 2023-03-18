@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="73D548D6-9D49-C132-B841-64BCAE9823A9" containerWithKeyObject="B5977745-F526-57DD-EDD1-0FFA71BB59D3" localFKIndex="5997F751-A1D7-00E2-24C4-3699E678312E" name="FK_CLIENT_CALL_ID_STATUS_TYPE">
+<sourceConnName>ANONYMOUS - LOCALHOST</sourceConnName>
+<sourceObjSchema>ANONYMOUS</sourceObjSchema>
+<sourceObjName>FK_CLIENT_CALL_ID_STATUS_TYPE</sourceObjName>
+<createdBy>duarte</createdBy>
+<createdTime>2023-03-18 16:52:42 UTC</createdTime>
+<ownerDesignName>dataModelerDesignSQL21c</ownerDesignName>
+<referredTableLongName>ANONYMOUS.CALL_STATUS_TYPE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>8624F88D-F58B-B9D1-63EC-467F4EA7E166</referredTableID>
+<keyObject>AED1DDD0-DCB4-4D62-C1F7-98E513FCC105</keyObject>
+<referredKeyID>AED1DDD0-DCB4-4D62-C1F7-98E513FCC105</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_CALL_STATUS_TYPE</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
