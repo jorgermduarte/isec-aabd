@@ -1,0 +1,17 @@
+Além disso, cada elemento do grupo deve propor, para ser implementada até ao checkpoint3:
+m) propor uma FUNÇÃO com o nome M_FUNC_2021xxxx (em que 2021xxxx é o nº de aluno do
+inforestudante), que considere relevante, justificando a sua relevância, e que pretende implementar
+até ao checkpoint 3. A relevância e o grau de complexidade das mesmas influenciarão fortemente
+a sua avaliação.
+n) propor um PROCEDIMENTO com o nome N_PROC_2021xxxx (em que 2021xxxx é o nº de aluno do
+inforestudante), que considere relevante, justificando a sua relevância, e que pretende implementar
+até ao checkpoint 3. A relevância e o grau de complexidade das mesmas influenciarão fortemente
+a sua avaliação.
+o) propor um TRIGGER com o nome O_TRIG_2021xxxx (em que 2021xxxx é o nº de aluno do
+inforestudante), que considere relevante, justificando a sua relevância, e que pretende implementar
+até ao checkpoint 3. A relevância e o grau de complexidade das mesmas influenciarão fortemente
+a sua avaliação. 
+
+
+Os elementos pedidos para este checkpoint devem ser entregues até ao dia 24-04-2023 e serão alvo de
+análise nas aulas de 26 e 27 de abril de 2023.
