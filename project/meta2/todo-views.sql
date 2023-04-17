@@ -56,17 +56,25 @@ fidelização nos próximos 3 meses, em que a quantidade médio de chamadas por 
 3 meses completos, é inferior à quantidade médio de chamadas do total do período de fidelização.
 Ordene o resultado descendentemente pela quantidade média de chamadas por mês. 
 */
+
 CREATE VIEW VIEW_B AS
 WITH loyalty_period_end AS (
     SELECT
         c.ID_CLIENT,
         c.ID_CONTRACT,
-        p.DESIGNATION AS Plano,
+        pap.DESIGNATION AS Plano_PRE_PAGO,
+        pbp.DESIGNATION AS Plano_POS_PAGO,
         c.CREATED_AT AS Data_Contrato,
-        ADD_MONTHS(c.CREATED_AT, p.LOYALTY_PERIOD) AS End_Loyalty_Period
+        c.LOYALTY_DATE  AS End_Loyalty_Period
     FROM CONTRACT c
-    JOIN PLAN p ON c.ID_PLAN_AFTER_PAID = p.ID_PLAN
-    WHERE ADD_MONTHS(c.CREATED_AT, p.LOYALTY_PERIOD) BETWEEN SYSDATE AND ADD_MONTHS(SYSDATE, 3)
+    JOIN CONTRACT_AFTER_PAID cap ON cap.ID_CONTRACT = c.ID_CONTRACT
+    JOIN CONTRACT_BEFORE_PAID cbp ON cbp.ID_CONTRACT = c.ID_CONTRACT
+    JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID = pap.ID_PLAN_AFTER_PAID
+    JOIN PLAN_BEFORE_PAID pbp ON cbp.ID_PLAN_BEFORE_PAID  = pbp.ID_PLAN_BEFORE_PAID
+    WHERE
+    	ADD_MONTHS(cap.CREATED_AT, c.DURATION) BETWEEN SYSDATE AND ADD_MONTHS(SYSDATE, 3)
+    OR
+    	ADD_MONTHS(cbp.CREATED_AT, c.DURATION) BETWEEN SYSDATE AND ADD_MONTHS(SYSDATE, 3)
 ),
 calls_last_3_months AS (
     SELECT
@@ -89,7 +97,8 @@ calls_loyalty_period AS (
     GROUP BY c.ID_CLIENT, c.Data_Contrato, c.End_Loyalty_Period
 )
 SELECT
-    l.Plano,
+    l.Plano_PRE_PAGO,
+    l.Plano_POS_PAGO,
     l.ID_CLIENT AS Num_Cliente,
     l.Data_Contrato,
     c3m.Avg_Calls_Last_3_Months AS N_Medio_Chamadas_3Meses,
@@ -99,7 +108,6 @@ JOIN calls_last_3_months c3m ON l.ID_CLIENT = c3m.ID_CLIENT
 JOIN calls_loyalty_period clp ON l.ID_CLIENT = clp.ID_CLIENT
 WHERE c3m.Avg_Calls_Last_3_Months < clp.Avg_Calls_Period
 ORDER BY c3m.Avg_Calls_Last_3_Months DESC;
-
 
 
 /*
@@ -112,19 +120,20 @@ CREATE VIEW VIEW_C AS
 WITH current_year_calls AS (
     SELECT
         c.ID_CONTRACT AS Contrato,
-        p.DESIGNATION AS Plano,
-        cl.NAME AS Nome,
-        cl.CITY AS Cidade,
+        pap.DESIGNATION AS Plano,
+        cl.FULL_NAME  AS Nome,
         pnc.PHONE_NUMBER AS Telefone,
-        cpnc.DESTINATION_NUMBER AS Destino,
+        cpnc.TARGET_NUMBER  AS Destino,
         COUNT(cpnc.ID_CALL) AS Num_Chamadas
     FROM CLIENT cl
     JOIN CONTRACT c ON cl.ID_CLIENT = c.ID_CLIENT
-    JOIN PLAN p ON c.ID_PLAN_AFTER_PAID = p.ID_PLAN
+    --JOIN PLAN p ON c.ID_PLAN_AFTER_PAID = p.ID_PLAN
+    JOIN CONTRACT_AFTER_PAID cap ON cap.ID_CONTRACT = C.ID_CONTRACT
+	JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID  =pap.ID_PLAN_AFTER_PAID  
     JOIN PHONE_NUMBER_CONTRACT pnc ON c.ID_CONTRACT = pnc.ID_CONTRACT
     JOIN CLIENT_PHONE_NUMBER_CALL cpnc ON pnc.ID_PHONE_NUMBER_CONTRACT = cpnc.ID_PHONE_NUMBER_CONTRACT
     WHERE EXTRACT(YEAR FROM cpnc.CREATED_AT) = EXTRACT(YEAR FROM SYSDATE)
-    GROUP BY c.ID_CONTRACT, p.DESIGNATION, cl.NAME, cl.CITY, pnc.PHONE_NUMBER, cpnc.DESTINATION_NUMBER
+    GROUP BY c.ID_CONTRACT, pap.DESIGNATION, cl.FULL_NAME, pnc.PHONE_NUMBER, cpnc.TARGET_NUMBER 
 ),
 total_calls_per_client AS (
     SELECT
@@ -137,7 +146,6 @@ SELECT
     c.Contrato,
     c.Plano,
     c.Nome,
-    c.Cidade,
     c.Telefone,
     c.Destino,
     (c.Num_Chamadas * 100.0 / t.Num_Chamadas_Total) AS Percentagem,
