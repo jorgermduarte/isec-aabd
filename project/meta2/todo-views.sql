@@ -4,12 +4,13 @@ quantidade e a duração total das chamadas realizadas, e a quantidade de SMS en
 considerando apenas os últimos 30 dias. Exclua os contratos cuja quantidade de chamadas seja
 inferior à quantidade média de chamadas por contrato
 */
+
 CREATE VIEW VIEW_A AS
 WITH last_year_contracts AS (
-    SELECT *
-    FROM CONTRACT
-    WHERE EXTRACT(YEAR FROM CREATED_AT) = EXTRACT(YEAR FROM SYSDATE) - 1
-    AND ID_PLAN_AFTER_PAID IS NOT NULL
+	SELECT * FROM CONTRACT c 
+	INNER JOIN CONTRACT_AFTER_PAID cap ON c.ID_CONTRACT = cap.ID_CONTRACT 
+	INNER JOIN CONTRACT_BEFORE_PAID cbp ON c.ID_CONTRACT = cbp.ID_CONTRACT 
+    WHERE EXTRACT(YEAR FROM c.CREATED_AT) = EXTRACT(YEAR FROM SYSDATE) - 1
 ),
 calls_stats AS (
     SELECT
@@ -48,8 +49,6 @@ JOIN PHONE_NUMBER_CONTRACT pnc ON c.ID_CONTRACT = pnc.ID_CONTRACT
 JOIN calls_stats cs ON c.ID_CONTRACT = cs.ID_CONTRACT
 JOIN sms_stats ss ON c.ID_CONTRACT = ss.ID_CONTRACT
 JOIN average_calls ac ON cs.QuantChamadas >= ac.Avg_Calls;
-
-
 
 /*
 VIEW_B que, para cada plano, mostre a listagem dos clientes que terminam o período de
