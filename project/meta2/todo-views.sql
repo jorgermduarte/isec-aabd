@@ -4,12 +4,10 @@ quantidade e a duração total das chamadas realizadas, e a quantidade de SMS en
 considerando apenas os últimos 30 dias. Exclua os contratos cuja quantidade de chamadas seja
 inferior à quantidade média de chamadas por contrato
 */
-
-CREATE VIEW VIEW_A AS
+CREATE OR REPLACE VIEW VIEW_A AS
 WITH last_year_contracts AS (
-	SELECT * FROM CONTRACT c 
+	SELECT c.* FROM CONTRACT c 
 	INNER JOIN CONTRACT_AFTER_PAID cap ON c.ID_CONTRACT = cap.ID_CONTRACT 
-	INNER JOIN CONTRACT_BEFORE_PAID cbp ON c.ID_CONTRACT = cbp.ID_CONTRACT 
     WHERE EXTRACT(YEAR FROM c.CREATED_AT) = EXTRACT(YEAR FROM SYSDATE) - 1
 ),
 calls_stats AS (
@@ -49,6 +47,7 @@ JOIN PHONE_NUMBER_CONTRACT pnc ON c.ID_CONTRACT = pnc.ID_CONTRACT
 JOIN calls_stats cs ON c.ID_CONTRACT = cs.ID_CONTRACT
 JOIN sms_stats ss ON c.ID_CONTRACT = ss.ID_CONTRACT
 JOIN average_calls ac ON cs.QuantChamadas >= ac.Avg_Calls;
+
 
 /*
 VIEW_B que, para cada plano, mostre a listagem dos clientes que terminam o período de
@@ -165,22 +164,29 @@ CREATE VIEW VIEW_D AS
 WITH monthly_new_contracts AS (
     SELECT
         TO_CHAR(c.CREATED_AT, 'YYYY-MM') AS Ano_Mes,
-        p.DESIGNATION AS Plano,
+        COALESCE(pap.DESIGNATION, pbb.DESIGNATION) AS Plano,
         COUNT(c.ID_CONTRACT) AS Quantidade_Novos_Contratos
     FROM CONTRACT c
-    JOIN PLAN p ON c.ID_PLAN = p.ID_PLAN
+    LEFT JOIN CONTRACT_AFTER_PAID cap ON cap.ID_CONTRACT=c.ID_CONTRACT
+    LEFT JOIN CONTRACT_BEFORE_PAID cbp ON cbp.ID_CONTRACT=c.ID_CONTRACT
+    LEFT JOIN PLAN_AFTER_PAID pap ON pap.ID_PLAN_AFTER_PAID=cap.ID_CONTRACT_AFTER_PAID
+    LEFT JOIN PLAN_BEFORE_PAID pbb ON pbb.ID_PLAN_TYPE_BEFORE_PAID=cbp.ID_CONTRACT_BEFORE_PAID
     WHERE c.CREATED_AT >= ADD_MONTHS(TRUNC(SYSDATE, 'MONTH'), -12)
-    GROUP BY TO_CHAR(c.CREATED_AT, 'YYYY-MM'), p.DESIGNATION
+    GROUP BY TO_CHAR(c.CREATED_AT, 'YYYY-MM'), COALESCE(pap.DESIGNATION, pbb.DESIGNATION)
 ),
 monthly_terminated_contracts AS (
     SELECT
-        TO_CHAR(c.CANCELED_AT, 'YYYY-MM') AS Ano_Mes,
-        p.DESIGNATION AS Plano,
-        COUNT(c.ID_CONTRACT) AS Quantidade_Contratos_Terminados
-    FROM CONTRACT c
-    JOIN PLAN p ON c.ID_PLAN = p.ID_PLAN
-    WHERE c.CANCELED_AT >= ADD_MONTHS(TRUNC(SYSDATE, 'MONTH'), -12)
-    GROUP BY TO_CHAR(c.CANCELED_AT, 'YYYY-MM'), p.DESIGNATION
+        TO_CHAR(cc.CANCELLATION_DATE, 'YYYY-MM') AS Ano_Mes,
+        COALESCE(pap.DESIGNATION, pbb.DESIGNATION) AS Plano,
+        COUNT(cc.ID_CONTRACT) AS Quantidade_Contratos_Terminados
+    FROM CONTRACT_CANCELLATION cc
+    JOIN CONTRACT c2 ON cc.ID_CONTRACT = c2.ID_CONTRACT
+    LEFT JOIN CONTRACT_AFTER_PAID cap ON cap.ID_CONTRACT=cc.ID_CONTRACT
+    LEFT JOIN CONTRACT_BEFORE_PAID cbp ON cbp.ID_CONTRACT=cc.ID_CONTRACT
+    LEFT JOIN PLAN_AFTER_PAID pap ON pap.ID_PLAN_AFTER_PAID=cap.ID_CONTRACT_AFTER_PAID
+    LEFT JOIN PLAN_BEFORE_PAID pbb ON pbb.ID_PLAN_TYPE_BEFORE_PAID=cbp.ID_CONTRACT_BEFORE_PAID
+    WHERE cc.CANCELLATION_DATE >= ADD_MONTHS(TRUNC(SYSDATE, 'MONTH'), -12)
+    GROUP BY TO_CHAR(cc.CANCELLATION_DATE, 'YYYY-MM'), COALESCE(pap.DESIGNATION, pbb.DESIGNATION)
 )
 SELECT
     COALESCE(nc.Ano_Mes, tc.Ano_Mes) AS Ano_Mes,
@@ -197,14 +203,14 @@ VIEW_E que, identifique os dias da semana, e os períodos horários (de hora em 
 quantidade de chamadas é superior à média da quantidade de chamadas em cada hora desse dia.
 Ordene por dia da semana (2ª a domingo) e descendentemente pela quantidade total de chamadas.
 */
-CREATE VIEW VIEW_E AS
+CREATE OR REPLACE VIEW VIEW_E AS
 WITH hourly_call_data AS (
     SELECT
-        TO_CHAR(c.START_TIME, 'D') AS Dia_Da_Semana,
-        TO_CHAR(c.START_TIME, 'HH24') AS Hora,
-        COUNT(c.ID_CALL) AS Quantidade_De_Chamadas
-    FROM CALL c
-    GROUP BY TO_CHAR(c.START_TIME, 'D'), TO_CHAR(c.START_TIME, 'HH24')
+        TO_CHAR(cpnc.CALL_ACCEPTED_DATE, 'D') AS Dia_Da_Semana,
+        TO_CHAR(cpnc.CALL_ACCEPTED_DATE, 'HH24') AS Hora,
+        COUNT(cpnc.ID_CALL) AS Quantidade_De_Chamadas
+    FROM CLIENT_PHONE_NUMBER_CALL cpnc
+    GROUP BY TO_CHAR(cpnc.CALL_ACCEPTED_DATE , 'D'), TO_CHAR(cpnc.CALL_ACCEPTED_DATE, 'HH24')
 ),
 hourly_call_average AS (
     SELECT
@@ -229,7 +235,7 @@ ORDER BY hcd.Dia_Da_Semana, hcd.Hora DESC;
     anterior para destinos da rede fixa, mostre o top 10 dos clientes com maior quantidade total de
     minutos. Ordene descendentemente pela quantidade de minutos.
 */
-CREATE VIEW VISTA_F AS
+CREATE OR REPLACE VIEW VISTA_F AS
 WITH previous_month_data AS (
     SELECT
         EXTRACT(YEAR FROM SYSDATE) AS Ano,
@@ -239,18 +245,20 @@ WITH previous_month_data AS (
 fixed_line_calls AS (
     SELECT
         c.ID_CLIENT,
-        c.NAME AS Nome_Cliente,
-        c.PHONE_NUMBER AS Telefone,
+        c.FULL_NAME AS Nome_Cliente,
+        pnc.PHONE_NUMBER AS Telefone,
         TO_CHAR(pmd.Ano) || '-' || LPAD(TO_CHAR(pmd.Mes), 2, '0') AS Ano_Mes,
         SUM(ca.DURATION) AS Quant_Minutos,
         COUNT(ca.ID_CALL) AS Quant_Chamadas,
         COUNT(sms.ID_SMS) AS Quant_SMS
     FROM CLIENT c
-    JOIN CALL ca ON c.ID_CLIENT = ca.ID_CLIENT
-    JOIN previous_month_data pmd ON EXTRACT(YEAR FROM ca.START_TIME) = pmd.Ano AND EXTRACT(MONTH FROM ca.START_TIME) = pmd.Mes
-    LEFT JOIN SMS sms ON c.ID_CLIENT = sms.ID_CLIENT AND EXTRACT(YEAR FROM sms.SEND_TIME) = pmd.Ano AND EXTRACT(MONTH FROM sms.SEND_TIME) = pmd.Mes
-    WHERE ca.DESTINATION_TYPE = 'Fixed Line'
-    GROUP BY c.ID_CLIENT, c.NAME, c.PHONE_NUMBER, pmd.Ano, pmd.Mes
+    JOIN CLIENT_PHONE_NUMBER_CALL ca ON c.ID_CLIENT = ca.ID_CLIENT
+    JOIN PHONE_NUMBER_CONTRACT pnc ON ca.ID_PHONE_NUMBER_CONTRACT=pnc.ID_PHONE_NUMBER_CONTRACT
+    JOIN NETWORK n ON CA.ID_NETWORK=N.ID_NETWORK
+    JOIN previous_month_data pmd ON EXTRACT(YEAR FROM ca.CALL_ACCEPTED_DATE) = pmd.Ano AND EXTRACT(MONTH FROM ca.CALL_ACCEPTED_DATE) = pmd.Mes
+    LEFT JOIN SMS sms ON c.ID_CLIENT = sms.ID_CLIENT AND EXTRACT(YEAR FROM sms.SENT_DATE) = pmd.Ano AND EXTRACT(MONTH FROM sms.SENT_DATE) = pmd.Mes
+    WHERE N.NAME = 'Fixo Nacional'
+    GROUP BY c.ID_CLIENT, c.FULL_NAME , pnc.PHONE_NUMBER , pmd.Ano, pmd.Mes
 )
 SELECT
     f.Nome_Cliente,
@@ -263,12 +271,13 @@ FROM fixed_line_calls f
 ORDER BY f.Quant_Minutos DESC
 FETCH FIRST 10 ROWS ONLY;
 
+
 /*
 VISTA_G que, considerando apenas os dados do ano atual, mostre para cliente a quantidade de
 chamadas e o total a pagar pelas chamadas realizadas para a rede fixa e para a rede móvel. Ordene
 descendentemente pela diferença da quantidade de chamadas entre rede fixa e rede móvel.
 */
-CREATE VIEW VISTA_G AS
+CREATE OR REPLACE VIEW VISTA_G AS
 WITH current_year_data AS (
     SELECT
         EXTRACT(YEAR FROM SYSDATE) AS Ano
@@ -277,15 +286,16 @@ WITH current_year_data AS (
 call_summary AS (
     SELECT
         c.ID_CLIENT,
-        c.NAME AS Nome_Cliente,
-        SUM(CASE WHEN ca.DESTINATION_TYPE = 'Fixed Line' THEN 1 ELSE 0 END) AS Fixa_QuantChamada,
-        SUM(CASE WHEN ca.DESTINATION_TYPE = 'Fixed Line' THEN ca.COST ELSE 0 END) AS Fixa_TotalPagar,
-        SUM(CASE WHEN ca.DESTINATION_TYPE = 'Mobile' THEN 1 ELSE 0 END) AS Movel_QuantChamada,
-        SUM(CASE WHEN ca.DESTINATION_TYPE = 'Mobile' THEN ca.COST ELSE 0 END) AS Movel_TotalPagar
-    FROM CLIENT c
-    JOIN CALL ca ON c.ID_CLIENT = ca.ID_CLIENT
-    JOIN current_year_data cyd ON EXTRACT(YEAR FROM ca.START_TIME) = cyd.Ano
-    GROUP BY c.ID_CLIENT, c.NAME
+        c.FULL_NAME  AS Nome_Cliente,
+        SUM(CASE WHEN n.NAME  = 'Fixo Nacional' THEN 1 ELSE 0 END) AS Fixa_QuantChamada,
+        SUM(CASE WHEN n.NAME  = 'Fixo Nacional' THEN ca.COST_VALUE  ELSE 0 END) AS Fixa_TotalPagar,
+        SUM(CASE WHEN n.NAME  = 'Móvel Nacional' THEN 1 ELSE 0 END) AS Movel_QuantChamada,
+        SUM(CASE WHEN n.NAME  = 'Móvel Nacional' THEN ca.COST_VALUE ELSE 0 END) AS Movel_TotalPagar
+    FROM CLIENT c 
+    JOIN CLIENT_PHONE_NUMBER_CALL  ca ON c.ID_CLIENT = ca.ID_CLIENT
+    JOIN NETWORK n ON ca.ID_NETWORK=n.ID_NETWORK
+    JOIN current_year_data cyd ON EXTRACT(YEAR FROM ca.CALL_ACCEPTED_DATE) = cyd.Ano
+    GROUP BY c.ID_CLIENT, c.FULL_NAME 
 )
 SELECT
     cs.Nome_Cliente,
@@ -302,31 +312,33 @@ VISTA_H que, para cada plano pós-pagos, mostre a quantidade, a duração total 
 chamadas, e também a quantidade e o custo total com o envio de SMS,. Ordene pela data em que
 na viagem entraram na zona.
 */
-CREATE VIEW VISTA_H AS
+CREATE OR REPLACE VIEW VISTA_H AS
 WITH call_summary AS (
     SELECT
-        p.ID_PLAN,
-        p.NAME AS Plano,
+        pap.ID_PLAN_AFTER_PAID,
+        pap.NAME  AS Plano,
         COUNT(*) AS Quant_chamadas,
         SUM(ca.DURATION) AS Quant_minutos,
-        SUM(ca.COST) AS CustoChamadas
-    FROM PLAN p
-    JOIN CLIENT c ON p.ID_PLAN = c.ID_PLAN
-    JOIN CALL ca ON c.ID_CLIENT = ca.ID_CLIENT
-    WHERE p.PLAN_TYPE = 'Postpaid'
-    GROUP BY p.ID_PLAN, p.NAME
+        SUM(ca.COST_VALUE) AS CustoChamadas
+    FROM CONTRACT_AFTER_PAID cap
+    JOIN contract c2 ON cap.ID_CONTRACT=c2.ID_CONTRACT
+    JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID=pap.ID_PLAN_AFTER_PAID    
+    JOIN CLIENT c ON c.ID_CLIENT=c2.ID_CLIENT
+    JOIN CLIENT_PHONE_NUMBER_CALL ca ON c.ID_CLIENT = ca.ID_CLIENT
+    GROUP BY pap.ID_PLAN_AFTER_PAID, pap.NAME 
 ),
 sms_summary AS (
     SELECT
         p.ID_PLAN,
         p.NAME AS Plano,
         COUNT(*) AS Quant_SMS,
-        SUM(s.COST) AS Custo_SMS
-    FROM PLAN p
-    JOIN CLIENT c ON p.ID_PLAN = c.ID_PLAN
+        SUM(s.COST_VALUE) AS Custo_SMS
+    FROM CONTRACT_AFTER_PAID cap
+    JOIN contract c2 ON cap.ID_CONTRACT=c2.ID_CONTRACT
+    JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID=pap.ID_PLAN_AFTER_PAID    
+    JOIN CLIENT c ON c.ID_CLIENT=c2.ID_CLIENT
     JOIN SMS s ON c.ID_CLIENT = s.ID_CLIENT
-    WHERE p.PLAN_TYPE = 'Postpaid'
-    GROUP BY p.ID_PLAN, p.NAME
+    GROUP BY  pap.ID_PLAN_AFTER_PAID, pap.NAME 
 )
 SELECT
     cs.Plano,
@@ -338,6 +350,8 @@ SELECT
 FROM call_summary cs
 JOIN sms_summary ss ON cs.ID_PLAN = ss.ID_PLAN
 ORDER BY cs.ID_PLAN;
+
+-- todo: continuar aqui
 
 
 /*
