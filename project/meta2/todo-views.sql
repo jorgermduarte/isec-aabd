@@ -361,19 +361,24 @@ ORDER BY cs.ID_PLAN;
     mês, apresentam uma percentagem utilização inferior à média das percentagens dos planos.
     Ordene por mês (numeral), ascendentemente pela percentagem média de utilização. 
 */
-CREATE VIEW VISTA_I AS
+CREATE OR REPLACE VIEW VISTA_I AS
 WITH monthly_usage AS (
     SELECT
-        EXTRACT(MONTH FROM c.DATETIME) AS Mes,
-        p.NAME AS Plano,
-        p.PLAN_MINUTES AS quant_minutos_plano,
-        AVG(ca.DURATION) AS Quant_minutos_utilizado
-    FROM PLAN p
-    JOIN CLIENT cl ON p.ID_PLAN = cl.ID_PLAN
-    JOIN CALL ca ON cl.ID_CLIENT = ca.ID_CLIENT
-    WHERE p.PLAN_TYPE = 'Postpaid' AND p.HAS_PLAFOND = 'Y'
-          AND EXTRACT(YEAR FROM ca.DATETIME) = 2021
-    GROUP BY EXTRACT(MONTH FROM c.DATETIME), p.NAME, p.PLAN_MINUTES
+        EXTRACT(MONTH FROM cpnc.CREATED_AT) AS Mes,
+        pap.NAME  AS Plano,
+        pap.TOTAL_MINUTES  AS quant_minutos_plano,
+        AVG(cpnc.DURATION) AS Quant_minutos_utilizado
+    FROM PLAN_AFTER_PAID pap
+    JOIN PLAN_TYPE_AFTER_PAID ptap ON pap.ID_PLAN_TYPE_AFTER_PAID=ptap.ID_PLAN_TYPE
+    JOIN CONTRACT_AFTER_PAID cap ON pap.ID_PLAN_AFTER_PAID=cap.ID_PLAN_AFTER_PAID
+    JOIN CONTRACT c ON cap.ID_CONTRACT=c.ID_CONTRACT
+    JOIN CLIENT cl ON cl.ID_CLIENT=c.ID_CLIENT 
+    JOIN PHONE_NUMBER_CONTRACT pnc ON pnc.ID_CONTRACT=c.ID_CONTRACT
+    JOIN CLIENT_PHONE_NUMBER_CALL cpnc ON CPNC.ID_PHONE_NUMBER_CONTRACT=pnc.ID_PHONE_NUMBER_CONTRACT
+    WHERE 
+    		ptap.NAME = 'Com Plafond'
+          AND EXTRACT(YEAR FROM cpnc.CREATED_AT) = 2021
+    GROUP BY EXTRACT(MONTH FROM cpnc.CREATED_AT), pap.NAME, pap.TOTAL_MINUTES
 ),
 avg_pct_usage AS (
     SELECT
