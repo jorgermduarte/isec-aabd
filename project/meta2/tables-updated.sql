@@ -4,7 +4,6 @@
 -- ============ 		 						 		 ================
 -- ======================================================================
 
-
 CREATE TABLE CLIENT(
 	ID_CLIENT NUMBER(10) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	FULL_NAME nvarchar2(255),
