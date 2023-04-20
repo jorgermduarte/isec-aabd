@@ -315,7 +315,7 @@ na viagem entraram na zona.
 CREATE OR REPLACE VIEW VISTA_H AS
 WITH call_summary AS (
     SELECT
-        pap.ID_PLAN_AFTER_PAID,
+        pap.ID_PLAN_AFTER_PAID AS ID_PLAN,
         pap.NAME  AS Plano,
         COUNT(*) AS Quant_chamadas,
         SUM(ca.DURATION) AS Quant_minutos,
@@ -329,8 +329,8 @@ WITH call_summary AS (
 ),
 sms_summary AS (
     SELECT
-        p.ID_PLAN,
-        p.NAME AS Plano,
+        pap.ID_PLAN_AFTER_PAID AS ID_PLAN,
+        pap.NAME AS Plano,
         COUNT(*) AS Quant_SMS,
         SUM(s.COST_VALUE) AS Custo_SMS
     FROM CONTRACT_AFTER_PAID cap
