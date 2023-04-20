@@ -351,9 +351,6 @@ FROM call_summary cs
 JOIN sms_summary ss ON cs.ID_PLAN = ss.ID_PLAN
 ORDER BY cs.ID_PLAN;
 
--- todo: continuar aqui
-
-
 /*
     VISTA_I que para cada plano pós-pago com plafonds e para mês do ano de 2021, apresente a
     quantidade de minutos do plano, a quantidade média de minutos gastos por mês pelos clientes
@@ -408,41 +405,42 @@ ORDER BY mu.Mes ASC, (100 * mu.Quant_minutos_utilizado / mu.quant_minutos_plano)
 */
 CREATE VIEW VISTA_J AS
 WITH friend_group_usage AS (
-    SELECT
-        fg.CAMPAIGN_NAME,
-        COUNT(ca.ID_CALL) AS total_calls,
-        SUM(ca.COST) AS total_cost,
-        SUM(ca.COST * (1 - ca.DISCOUNT_RATE)) AS total_discount
-    FROM FRIENDS_GROUP fg
-    JOIN CLIENT cl ON fg.ID_GROUP = cl.ID_GROUP
-    JOIN CALL ca ON cl.ID_CLIENT = ca.ID_CLIENT
-    WHERE ca.CALLER IN (SELECT MEMBER FROM FRIENDS_GROUP_MEMBERS WHERE ID_GROUP = fg.ID_GROUP)
-          AND ca.CALLEE IN (SELECT MEMBER FROM FRIENDS_GROUP_MEMBERS WHERE ID_GROUP = fg.ID_GROUP)
-          AND EXTRACT(MONTH FROM ca.DATETIME) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -1))
-    GROUP BY fg.CAMPAIGN_NAME
+	SELECT 
+		c.NAME,
+		count(cpnc.ID_CALL) AS total_calls,
+		sum(cpnc.COST_VALUE) AS total_cost,
+		SUM(cpnc.COST_VALUE * (1 - c.DISCOUNT_VOICE_PERCENTAGE)) AS total_discount
+	FROM PHONE_NUMBER_COMPAIGN pnc 
+	JOIN CAMPAIGN c ON PNC.ID_CAMPAIGN=c.ID_CAMPAIGN 
+	JOIN CLIENT_PHONE_NUMBER_CALL cpnc ON cpnc.ID_PHONE_NUMBER_CONTRACT=pnc.ID_PHONE_NUMBER_CONTRACT 
+	WHERE cpnc.TARGET_NUMBER IN 
+		(	
+			SELECT pnc2.TARGET_PHONE_NUMBER  FROM PHONE_NUMBER_COMPAIGN pnc2 WHERE pnc2.ID_PHONE_NUMBER_CONTRACT =pnc.ID_PHONE_NUMBER_CONTRACT 
+		)
+	GROUP BY c.NAME 
 ),
 monthly_growth AS (
     SELECT
-        fg.CAMPAIGN_NAME,
-        COUNT(CASE WHEN EXTRACT(MONTH FROM cl.DATE_JOINED) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -1)) THEN 1 END) AS current_month_members,
-        COUNT(CASE WHEN EXTRACT(MONTH FROM cl.DATE_JOINED) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -2)) THEN 1 END) AS previous_month_members
-    FROM FRIENDS_GROUP fg
-    JOIN CLIENT cl ON fg.ID_GROUP = cl.ID_GROUP
-    GROUP BY fg.CAMPAIGN_NAME
+        c.NAME,
+        COUNT(CASE WHEN EXTRACT(MONTH FROM pnc.CREATED_AT) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -1)) THEN 1 END) AS current_month_members,
+        COUNT(CASE WHEN EXTRACT(MONTH FROM pnc.CREATED_AT) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -2)) THEN 1 END) AS previous_month_members
+    FROM PHONE_NUMBER_COMPAIGN pnc
+    JOIN CAMPAIGN c ON pnc.ID_CAMPAIGN = c.ID_CAMPAIGN
+    GROUP BY c.NAME
 )
 SELECT
-    fgu.CAMPAIGN_NAME,
+    fgu.NAME,
     fgu.total_calls,
     fgu.total_cost,
     fgu.total_discount
 FROM friend_group_usage fgu
-JOIN monthly_growth mg ON fgu.CAMPAIGN_NAME = mg.CAMPAIGN_NAME
+JOIN monthly_growth mg ON fgu.NAME = mg.NAME
 WHERE mg.current_month_members > 1.1 * mg.previous_month_members
 ORDER BY (mg.current_month_members - mg.previous_month_members) / mg.previous_month_members DESC;
 
 
 /*
-    VISTA VIEW_K
+    VISTA VIEW_K_2021110042
     Esta view retorna a quantidade de chamadas realizadas e a duração total das chamadas por dia da semana e plano,
     o que pode ser relevante para a empresa analisar o uso dos planos por dia da semana.
 */
@@ -461,6 +459,7 @@ ORDER BY dia_da_semana, plano;
 
 
 /*
+    VISTA VIEW_L_2021110042
     Cada elemento do grupo deve criar a vista com o formato VIEW_L_<naluno>, que se propôs a
 fazer no checkpoint1, que inclua um SELECT encadeado e que considere relevante, justificando
 a sua relevância. A relevância e o nível de complexidade das mesmas influenciarão fortemente a
