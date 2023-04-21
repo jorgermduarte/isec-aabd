@@ -200,7 +200,6 @@ DECLARE
 BEGIN
   FOR x IN c_phone_numbers LOOP
       DBMS_OUTPUT.PUT_LINE('ID_PHONE_NUMBER_CONTRACT: ' || x.ID_PHONE_NUMBER_CONTRACT || ', ID_CONTRACT: ' || x.ID_CONTRACT);
-	  
     IF MOD(x.ID_PHONE_NUMBER_CONTRACT, 2) = 0 THEN
     	-- par ( offline)
     	INSERT INTO PHONE_NUMBER_STATUS (ID_CONTRACT,ID_PHONE_NUMBER_CONTRACT,STATUS_TYPE)
@@ -212,6 +211,106 @@ BEGIN
 		SELECT x.ID_CONTRACT,x.ID_PHONE_NUMBER_CONTRACT,pnst.ID_PHONE_NUMBER_STATUS_TYPE  FROM PHONE_NUMBER_STATUS_TYPE pnst 
     	WHERE pnst.NAME = 'ONLINE';
     END IF;
-	  
   END LOOP;
+END;
+
+
+
+BEGIN
+
+  INSERT INTO PLAN_AFTER_PAID_TARRIF (ID_PLAN_AFTER_PAID, ID_TARRIF) VALUES (1, 2); -- Voz M01
+  INSERT INTO PLAN_AFTER_PAID_TARRIF (ID_PLAN_AFTER_PAID, ID_TARRIF) VALUES (2, 4); -- Voz F01
+  INSERT INTO PLAN_AFTER_PAID_TARRIF (ID_PLAN_AFTER_PAID, ID_TARRIF) VALUES (3, 3); -- Voz M02
+  INSERT INTO PLAN_AFTER_PAID_TARRIF (ID_PLAN_AFTER_PAID, ID_TARRIF) VALUES (4, 2); -- Voz M01 (2001)
+  INSERT INTO PLAN_AFTER_PAID_TARRIF (ID_PLAN_AFTER_PAID, ID_TARRIF) VALUES (5, 5); -- SMS S08
+  INSERT INTO PLAN_AFTER_PAID_TARRIF (ID_PLAN_AFTER_PAID, ID_TARRIF) VALUES (5, 1); -- VOZ M01
+
+  INSERT INTO PLAN_BEFORE_PAID_TARRIF (ID_PLAN_BEFORE_PAID, ID_TARRIF) VALUES (1, 2); -- Voz M01
+  INSERT INTO PLAN_BEFORE_PAID_TARRIF (ID_PLAN_BEFORE_PAID, ID_TARRIF) VALUES (2, 4); -- Voz F01
+  INSERT INTO PLAN_BEFORE_PAID_TARRIF (ID_PLAN_BEFORE_PAID, ID_TARRIF) VALUES (3, 5); -- SMS S08
+  INSERT INTO PLAN_BEFORE_PAID_TARRIF (ID_PLAN_BEFORE_PAID, ID_TARRIF) VALUES (4, 3); -- Voz M02
+
+  COMMIT;
+END;
+
+
+-- INSERCAO DE CHAMADA ALEATORIA (CORRER x vezes)
+DECLARE
+  v_id_client NUMBER;
+  v_id_contract NUMBER;
+  v_id_phone_number_contract NUMBER;
+  v_duration NUMBER;
+  v_call_attempted_seconds NUMBER;
+  v_cost_value NUMBER;
+  v_call_accepted NUMBER;
+  v_call_accepted_date DATE;
+  v_call_completed_date DATE;
+  v_id_call NUMBER;
+  v_random_minutes NUMBER;
+BEGIN
+	-- selecionar um cliente e o contrato dele aleatorio ( pos pago !)
+	SELECT c.ID_CLIENT, c2.ID_CONTRACT
+	INTO v_id_client, v_id_contract
+	FROM CLIENT c
+	INNER JOIN CONTRACT c2
+	INNER JOIN CONTRACT_AFTER_PAID cap ON c2.ID_CONTRACT =cap.ID_CONTRACT 
+	ON c2.ID_CLIENT=c.ID_CLIENT
+	WHERE C2.IS_ACTIVE = 1 AND  ROWNUM = 1
+	ORDER BY DBMS_RANDOM.VALUE;
+
+	DBMS_OUTPUT.PUT_LINE('ID CONTRACT: ' || v_id_contract || ' ID CLIENT: ' || v_id_client);
+ 
+  -- numero telefone aleatorio do contrato aleatorio 
+    SELECT pnc.ID_PHONE_NUMBER_CONTRACT  
+    INTO v_id_phone_number_contract
+    FROM CONTRACT c
+    JOIN PHONE_NUMBER_CONTRACT pnc ON pnc.ID_CONTRACT = c.ID_CONTRACT
+    WHERE c.ID_CONTRACT IN (v_id_contract)
+      AND pnc.CANCELLATION_DATE IS NULL
+      AND c.IS_ACTIVE = 1
+      AND ROWNUM=1
+    ORDER BY DBMS_RANDOM.VALUE;
+
+  v_duration := DBMS_RANDOM.VALUE(1, 3600); -- Duração aleatória em SEGUNDOS
+  v_call_attempted_seconds := DBMS_RANDOM.VALUE(3, 27);
+  
+  v_random_minutes := ROUND(v_duration);
+  v_cost_value := 0;
+  v_call_accepted := CASE WHEN DBMS_RANDOM.VALUE(0, 1) > 0.5 THEN 1 ELSE 0 END;
+  v_call_accepted_date := CASE WHEN v_call_accepted = 1 THEN SYSDATE ELSE NULL END;
+  v_call_completed_date := CASE WHEN v_call_accepted = 1 THEN SYSDATE + (v_random_minutes / 1440) ELSE NULL END;
+
+ 
+ 	IF v_call_accepted = 0 THEN
+		v_random_minutes := 0;
+	END IF;
+
+
+  -- Calcular o custo da chamada com base na duração e no tarifário
+  SELECT
+    T.MONEY_PER_UNIT * (v_random_minutes / 60) -- ERA minutos passou a segudnos :P daqui a divisao por 60
+  INTO
+    v_cost_value
+  FROM
+	  CONTRACT_AFTER_PAID cap
+    JOIN CONTRACT C ON cap.ID_CONTRACT =c.ID_CONTRACT	
+    JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID=pap.ID_PLAN_AFTER_PAID
+    JOIN PLAN_AFTER_PAID_TARRIF papt ON PAPT.ID_PLAN_AFTER_PAID=pap.ID_PLAN_AFTER_PAID
+	JOIN TARRIF t ON t.ID_TARRIF = PAPT.ID_TARRIF 
+	  WHERE
+    cap.ID_PHONE_NUMBER_CONTRACT=v_id_phone_number_contract
+    AND T.ID_COMMUNICATION_TYPE = 1 
+--    AND T.ID_NETWORK = 2
+    AND T.IS_ACTIVE = 1;
+ 
+  -- Inserir chamada
+  INSERT INTO CLIENT_PHONE_NUMBER_CALL (ID_CLIENT, ID_PHONE_NUMBER_CONTRACT, ID_NETWORK, ID_STATUS_TYPE, TARGET_NUMBER, DURATION, COST_VALUE, CALL_ACCEPTED, CALL_ACCEPTED_DATE, CALL_COMPLETED_DATE, CALL_ATTEMPTED_SECONDS)
+  VALUES (v_id_client, v_id_phone_number_contract, 2, 1, '91'||TO_CHAR(ROUND(DBMS_RANDOM.VALUE(10000000, 99999999))), v_random_minutes, v_cost_value, v_call_accepted, v_call_accepted_date, v_call_completed_date, v_call_attempted_seconds)
+  RETURNING ID_CALL INTO v_id_call;
+
+  -- Inserir histórico de chamadas
+  INSERT INTO CLIENT_PHONE_NUMBER_CALL_HISTORY (ID_CLIENT_PHONE_NUMBER_CALL, ID_STATUS_TYPE, ID_NETWORK, ID_PHONE_NUMBER_CONTRACT, CALL_ACCEPTED, CALL_ACCEPTED_DATE, CALL_COMPLETED_DATE, CALL_ATTEMPTED_SECONDS)
+  VALUES (v_id_call, 1, 2, v_id_phone_number_contract, v_call_accepted, v_call_accepted_date, v_call_completed_date, v_call_attempted_seconds);
+
+  COMMIT;
 END;
