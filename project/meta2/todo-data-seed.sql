@@ -140,23 +140,39 @@ VALUES ('SMS','SMS para 10',10,'2021-06-01','2021-12-01',50,NULL);
 
 
 DECLARE
-  v_phone_number PHONE_NUMBER_CONTRACT.PHONE_NUMBER%TYPE;
-  v_id_contract CONTRACT.ID_CONTRACT%TYPE;
+  v_id_contract NUMBER;
+  v_id_plan_after_paid NUMBER;
+  v_id_plan_before_paid NUMBER;
+  v_id_phone_number_contract NUMBER;
 BEGIN
-  FOR i IN 1..100 LOOP
-    v_phone_number := CASE
-      WHEN MOD(i, 2) = 0 THEN '2' || LPAD(TO_CHAR(DBMS_RANDOM.VALUE(100000000, 999999999), 'FM999999999'), 8, '0')
-      ELSE '9' || LPAD(TO_CHAR(DBMS_RANDOM.VALUE(100000000, 999999999), 'FM999999999'), 8, '0')
-    END;
+  -- IDs dos planos
+  SELECT MIN(x.ID_PLAN_AFTER_PAID) INTO v_id_plan_after_paid FROM PLAN_AFTER_PAID x WHERE x.IS_ACTIVE =1;
+  SELECT MIN(x.ID_PLAN_BEFORE_PAID) INTO v_id_plan_before_paid FROM PLAN_BEFORE_PAID x WHERE x.IS_ACTIVE =1;
 
-    v_id_contract := i;
+  FOR i IN 1..9 LOOP
+    -- contrato
+    INSERT INTO CONTRACT (ID_CLIENT, PHONE_NUMBER, START_DATE, END_DATE)
+    VALUES (i, '92345678'||i, SYSDATE, ADD_MONTHS(SYSDATE, 12))
+    RETURNING ID_CONTRACT INTO v_id_contract;
 
-    INSERT INTO CONTRACT (ID_CLIENT, PHONE_NUMBER , START_DATE ,END_DATE, LOYALTY_DATE,DURATION)
-    VALUES (i, v_phone_number, SYSDATE, ADD_MONTHS(SYSDATE, 12),ADD_MONTHS(SYSDATE, 12),365);
+    -- associacao dos numeros ao contrato
+    INSERT INTO PHONE_NUMBER_CONTRACT (ID_CONTRACT, PHONE_NUMBER)
+    VALUES (v_id_contract, '92345678'||i)
+    RETURNING ID_PHONE_NUMBER_CONTRACT INTO v_id_phone_number_contract;
 
+    --ou  CONTRACT_AFTER_PAID ou CONTRACT_BEFORE_PAID, mas não em ambos
+    IF MOD(i, 2) = 0 THEN
+      INSERT INTO CONTRACT_AFTER_PAID (ID_CONTRACT, ID_PLAN_AFTER_PAID, ID_PHONE_NUMBER_CONTRACT, END_DATE)
+      VALUES (v_id_contract, v_id_plan_after_paid, v_id_phone_number_contract, ADD_MONTHS(SYSDATE, 12));
+    ELSE
+      INSERT INTO CONTRACT_BEFORE_PAID (ID_CONTRACT, ID_PLAN_BEFORE_PAID, ID_PHONE_NUMBER_CONTRACT, END_DATE)
+      VALUES (v_id_contract, v_id_plan_before_paid, v_id_phone_number_contract, ADD_MONTHS(SYSDATE, 12));
+
+      -- adicao de depositios para os pre pagos
+      INSERT INTO PHONE_NUMBER_DEPOSITS (ID_CONTRACT, ID_PHONE_NUMBER_CONTRACT, VALUE)
+      VALUES (v_id_contract, v_id_phone_number_contract, 100);
+    END IF;
   END LOOP;
 END;
 
 
-INSERT INTO PHONE_NUMBER_CONTRACT (ID_CONTRACT,PHONE_NUMBER)
-SELECT C.ID_CONTRACT,C.PHONE_NUMBER FROM CONTRACT c 
