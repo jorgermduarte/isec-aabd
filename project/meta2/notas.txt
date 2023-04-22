@@ -1,10 +1,6 @@
 ver VIEW_B
  - esta qq coisa mal
 
-VISTA_F
-- quantidade total de minutos das chamadas realizadas no mês
-    anterior para destinos da rede fixa?
-    (destinos de rede fixa!?!?) sabemos as redes dos destinos tambem? nao importa só quem está a ligar?
 
 vista_i
      tenho de inserir dados com planos com plafonds e chamadas nessa plano
@@ -15,3 +11,9 @@ vista_j
 
 VIEW_K_2021110042
     duvidosa
+    
+VISTA_F
+- quantidade total de minutos das chamadas realizadas no mês
+    anterior para destinos da rede fixa?
+    (destinos de rede fixa!?!?) sabemos as redes dos destinos tambem? nao importa só quem está a ligar?
+
