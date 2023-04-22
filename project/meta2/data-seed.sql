@@ -288,7 +288,7 @@ BEGIN
 
   -- Calcular o custo da chamada com base na duração e no tarifário
   SELECT
-    T.MONEY_PER_UNIT * (v_random_minutes / 60) -- ERA minutos passou a segudnos :P daqui a divisao por 60
+    T.MONEY_PER_UNIT * (v_random_minutes / 60) -- ERA minutos passou a segudnos (daqui a divisao por 60)
   INTO
     v_cost_value
   FROM

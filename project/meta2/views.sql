@@ -5,7 +5,6 @@ considerando apenas os últimos 30 dias. Exclua os contratos cuja quantidade de 
 inferior à quantidade média de chamadas por contrato
 */
 
-    
 CREATE OR REPLACE VIEW VIEW_A AS
 WITH last_year_contracts AS (
 	SELECT c.* FROM CONTRACT c 
