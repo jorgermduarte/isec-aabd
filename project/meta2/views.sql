@@ -4,6 +4,8 @@ quantidade e a duração total das chamadas realizadas, e a quantidade de SMS en
 considerando apenas os últimos 30 dias. Exclua os contratos cuja quantidade de chamadas seja
 inferior à quantidade média de chamadas por contrato
 */
+
+    
 CREATE OR REPLACE VIEW VIEW_A AS
 WITH last_year_contracts AS (
 	SELECT c.* FROM CONTRACT c 
@@ -44,10 +46,9 @@ SELECT
     ss.QuantSMS_Enviados
 FROM last_year_contracts c
 JOIN PHONE_NUMBER_CONTRACT pnc ON c.ID_CONTRACT = pnc.ID_CONTRACT
-JOIN calls_stats cs ON c.ID_CONTRACT = cs.ID_CONTRACT
-JOIN sms_stats ss ON c.ID_CONTRACT = ss.ID_CONTRACT
-JOIN average_calls ac ON cs.QuantChamadas >= ac.Avg_Calls;
-
+left JOIN calls_stats cs ON c.ID_CONTRACT = cs.ID_CONTRACT
+left JOIN sms_stats ss ON c.ID_CONTRACT = ss.ID_CONTRACT
+left JOIN average_calls ac ON cs.QuantChamadas >= ac.Avg_Calls;
 
 /*
 VIEW_B que, para cada plano, mostre a listagem dos clientes que terminam o período de
@@ -103,8 +104,8 @@ SELECT
     c3m.Avg_Calls_Last_3_Months AS N_Medio_Chamadas_3Meses,
     clp.Avg_Calls_Period AS N_Medio_mensal_total_periodo
 FROM loyalty_period_end l
-JOIN calls_last_3_months c3m ON l.ID_CLIENT = c3m.ID_CLIENT
-JOIN calls_loyalty_period clp ON l.ID_CLIENT = clp.ID_CLIENT
+left JOIN calls_last_3_months c3m ON l.ID_CLIENT = c3m.ID_CLIENT
+left JOIN calls_loyalty_period clp ON l.ID_CLIENT = clp.ID_CLIENT
 WHERE c3m.Avg_Calls_Last_3_Months < clp.Avg_Calls_Period
 ORDER BY c3m.Avg_Calls_Last_3_Months DESC;
 
@@ -115,7 +116,7 @@ pós-pagos, mostre apenas os números de destino que representam mais do que 50%
 realizadas por esse cliente. Ordene descendentemente pela percentagem de chamadas para esse
 número.
 */
-CREATE VIEW VIEW_C AS
+CREATE or replace VIEW VIEW_C AS
 WITH current_year_calls AS (
     SELECT
         c.ID_CONTRACT AS Contrato,
@@ -151,7 +152,7 @@ SELECT
     c.Num_Chamadas,
     t.Num_Chamadas_Total
 FROM current_year_calls c
-JOIN total_calls_per_client t ON c.Contrato = t.Contrato
+left JOIN total_calls_per_client t ON c.Contrato = t.Contrato
 WHERE (c.Num_Chamadas * 100.0 / t.Num_Chamadas_Total) > 50
 ORDER BY Percentagem DESC;
 
@@ -210,6 +211,7 @@ WITH hourly_call_data AS (
         TO_CHAR(cpnc.CALL_ACCEPTED_DATE, 'HH24') AS Hora,
         COUNT(cpnc.ID_CALL) AS Quantidade_De_Chamadas
     FROM CLIENT_PHONE_NUMBER_CALL cpnc
+    WHERE cpnc.CALL_ACCEPTED = 1
     GROUP BY TO_CHAR(cpnc.CALL_ACCEPTED_DATE , 'D'), TO_CHAR(cpnc.CALL_ACCEPTED_DATE, 'HH24')
 ),
 hourly_call_average AS (
@@ -225,7 +227,7 @@ SELECT
     hcd.Quantidade_De_Chamadas,
     hca.Quantidade_Media_Chamadas
 FROM hourly_call_data hcd
-JOIN hourly_call_average hca ON hcd.Dia_Da_Semana = hca.Dia_Da_Semana
+left JOIN hourly_call_average hca ON hcd.Dia_Da_Semana = hca.Dia_Da_Semana
 WHERE hcd.Quantidade_De_Chamadas > hca.Quantidade_Media_Chamadas
 ORDER BY hcd.Dia_Da_Semana, hcd.Hora DESC;
 
@@ -348,7 +350,7 @@ SELECT
     ss.Quant_SMS,
     ss.Custo_SMS
 FROM call_summary cs
-JOIN sms_summary ss ON cs.ID_PLAN = ss.ID_PLAN
+LEFT JOIN sms_summary ss ON cs.ID_PLAN = ss.ID_PLAN
 ORDER BY cs.ID_PLAN;
 
 /*
@@ -482,10 +484,8 @@ SELECT
   c.FULL_NAME,
   pnc.ID_PHONE_NUMBER_CONTRACT,
   pnc.PHONE_NUMBER,
-  pbp.NAME AS PLAN_BEFORE_PAID_NAME,
-  pbp.DESIGNATION AS PLAN_BEFORE_PAID_DESIGNATION,
-  pap.NAME AS PLAN_AFTER_PAID_NAME,
-  pap.DESIGNATION AS PLAN_AFTER_PAID_DESIGNATION
+  COALESCE(pbp.NAME,pap.NAME ) AS PLAN,
+COALESCE(pbp.DESIGNATION,pap.DESIGNATION ) AS DESIGNATION
 FROM
   CLIENT c
 JOIN CONTRACT con ON c.ID_CLIENT = con.ID_CLIENT
@@ -497,8 +497,6 @@ LEFT JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID = pap.ID_PLAN_AFTER_PAID
 ORDER BY
   c.ID_CLIENT,
   pnc.ID_PHONE_NUMBER_CONTRACT;
-
-
 
 
 /*
