@@ -57,24 +57,21 @@ fidelização nos próximos 3 meses, em que a quantidade médio de chamadas por 
 Ordene o resultado descendentemente pela quantidade média de chamadas por mês. 
 */
 
-CREATE VIEW VIEW_B AS
+CREATE OR REPLACE VIEW VIEW_B AS
 WITH loyalty_period_end AS (
     SELECT
         c.ID_CLIENT,
         c.ID_CONTRACT,
-        pap.DESIGNATION AS Plano_PRE_PAGO,
-        pbp.DESIGNATION AS Plano_POS_PAGO,
+        COALESCE(pap.DESIGNATION, pbp.DESIGNATION) AS Plano,
         c.CREATED_AT AS Data_Contrato,
-        c.LOYALTY_DATE  AS End_Loyalty_Period
+        c.END_DATE  AS End_Loyalty_Period
     FROM CONTRACT c
-    JOIN CONTRACT_AFTER_PAID cap ON cap.ID_CONTRACT = c.ID_CONTRACT
-    JOIN CONTRACT_BEFORE_PAID cbp ON cbp.ID_CONTRACT = c.ID_CONTRACT
-    JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID = pap.ID_PLAN_AFTER_PAID
-    JOIN PLAN_BEFORE_PAID pbp ON cbp.ID_PLAN_BEFORE_PAID  = pbp.ID_PLAN_BEFORE_PAID
+    LEFT JOIN CONTRACT_AFTER_PAID cap ON cap.ID_CONTRACT = c.ID_CONTRACT
+    LEFT JOIN CONTRACT_BEFORE_PAID cbp ON cbp.ID_CONTRACT = c.ID_CONTRACT
+    LEFT JOIN PLAN_AFTER_PAID pap ON cap.ID_PLAN_AFTER_PAID = pap.ID_PLAN_AFTER_PAID
+    LEFT JOIN PLAN_BEFORE_PAID pbp ON cbp.ID_PLAN_BEFORE_PAID = pbp.ID_PLAN_BEFORE_PAID
     WHERE
-    	ADD_MONTHS(cap.CREATED_AT, c.DURATION) BETWEEN SYSDATE AND ADD_MONTHS(SYSDATE, 3)
-    OR
-    	ADD_MONTHS(cbp.CREATED_AT, c.DURATION) BETWEEN SYSDATE AND ADD_MONTHS(SYSDATE, 3)
+        c.END_DATE  BETWEEN SYSDATE AND ADD_MONTHS(SYSDATE, 3)
 ),
 calls_last_3_months AS (
     SELECT
@@ -97,18 +94,16 @@ calls_loyalty_period AS (
     GROUP BY c.ID_CLIENT, c.Data_Contrato, c.End_Loyalty_Period
 )
 SELECT
-    l.Plano_PRE_PAGO,
-    l.Plano_POS_PAGO,
+    l.Plano,
     l.ID_CLIENT AS Num_Cliente,
     l.Data_Contrato,
     c3m.Avg_Calls_Last_3_Months AS N_Medio_Chamadas_3Meses,
     clp.Avg_Calls_Period AS N_Medio_mensal_total_periodo
 FROM loyalty_period_end l
-left JOIN calls_last_3_months c3m ON l.ID_CLIENT = c3m.ID_CLIENT
-left JOIN calls_loyalty_period clp ON l.ID_CLIENT = clp.ID_CLIENT
+LEFT JOIN calls_last_3_months c3m ON l.ID_CLIENT = c3m.ID_CLIENT
+LEFT JOIN calls_loyalty_period clp ON l.ID_CLIENT = clp.ID_CLIENT
 WHERE c3m.Avg_Calls_Last_3_Months < clp.Avg_Calls_Period
 ORDER BY c3m.Avg_Calls_Last_3_Months DESC;
-
 
 /*
 VIEW_C que, considerando apenas as chamadas no corrente ano realizadas por clientes de planos
@@ -397,7 +392,6 @@ JOIN avg_pct_usage apu ON mu.Mes = apu.Mes
 WHERE 100 * mu.Quant_minutos_utilizado / mu.quant_minutos_plano < apu.avg_percent_utilizacao
 ORDER BY mu.Mes ASC, (100 * mu.Quant_minutos_utilizado / mu.quant_minutos_plano) ASC;
 
-
 /*
     VISTA_J que para cada campanha de grupos de amigos, calcule a quantidade total de chamadas
     realizadas entre números do grupo, o valor total dessas chamadas e o valor total de desconto
@@ -405,27 +399,27 @@ ORDER BY mu.Mes ASC, (100 * mu.Quant_minutos_utilizado / mu.quant_minutos_plano)
     verificado um aumento da quantidade de aderentes superior a 10% em relação à quantidade de
     aderentes do mês anterior. Ordene descendentemente pela percentagem de crescimento. 
 */
-CREATE VIEW VISTA_J AS
+CREATE OR REPLACE VIEW VISTA_J AS
 WITH friend_group_usage AS (
 	SELECT 
 		c.NAME,
 		count(cpnc.ID_CALL) AS total_calls,
 		sum(cpnc.COST_VALUE) AS total_cost,
-		SUM(cpnc.COST_VALUE * (1 - c.DISCOUNT_VOICE_PERCENTAGE)) AS total_discount
+		SUM( cpnc.COST_VALUE * (c.DISCOUNT_VOICE_PERCENTAGE / 100) ) AS total_discount
 	FROM PHONE_NUMBER_COMPAIGN pnc 
 	JOIN CAMPAIGN c ON PNC.ID_CAMPAIGN=c.ID_CAMPAIGN 
 	JOIN CLIENT_PHONE_NUMBER_CALL cpnc ON cpnc.ID_PHONE_NUMBER_CONTRACT=pnc.ID_PHONE_NUMBER_CONTRACT 
 	WHERE cpnc.TARGET_NUMBER IN 
 		(	
-			SELECT pnc2.TARGET_PHONE_NUMBER  FROM PHONE_NUMBER_COMPAIGN pnc2 WHERE pnc2.ID_PHONE_NUMBER_CONTRACT =pnc.ID_PHONE_NUMBER_CONTRACT 
+			SELECT pnc2.TARGET_PHONE_NUMBER  FROM PHONE_NUMBER_COMPAIGN pnc2 WHERE pnc2.ID_PHONE_NUMBER_CONTRACT =pnc.ID_PHONE_NUMBER_CONTRACT  AND pnc2.ID_CLIENT_CAMPAIGN=pnc.ID_CLIENT_CAMPAIGN 
 		)
 	GROUP BY c.NAME 
 ),
 monthly_growth AS (
     SELECT
         c.NAME,
-        COUNT(CASE WHEN EXTRACT(MONTH FROM pnc.CREATED_AT) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -1)) THEN 1 END) AS current_month_members,
-        COUNT(CASE WHEN EXTRACT(MONTH FROM pnc.CREATED_AT) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -2)) THEN 1 END) AS previous_month_members
+        COUNT(CASE WHEN EXTRACT(MONTH FROM pnc.CREATED_AT) <= EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -1)) THEN 1 END) AS current_month_members,
+        COUNT(CASE WHEN EXTRACT(MONTH FROM pnc.CREATED_AT) < EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -2)) THEN 1 END) AS previous_month_members
     FROM PHONE_NUMBER_COMPAIGN pnc
     JOIN CAMPAIGN c ON pnc.ID_CAMPAIGN = c.ID_CAMPAIGN
     GROUP BY c.NAME
@@ -438,25 +432,19 @@ SELECT
 FROM friend_group_usage fgu
 JOIN monthly_growth mg ON fgu.NAME = mg.NAME
 WHERE mg.current_month_members > 1.1 * mg.previous_month_members
-ORDER BY (mg.current_month_members - mg.previous_month_members) / mg.previous_month_members DESC;
-
+ORDER BY 
+(mg.current_month_members - mg.previous_month_members) / NULLIF(mg.previous_month_members, 0) DESC;
 
 /*
  * VIEW_K_2021110042
  * resumo das informações relacionadas aos planos e números de telefone associados de cada cliente
  */
-
 CREATE OR REPLACE VIEW VIEW_K_2021110042 AS
 SELECT
   c.ID_CLIENT,
   c.FULL_NAME,
   COUNT(DISTINCT pa.ID_PLAN_AFTER_PAID) + COUNT(DISTINCT pb.ID_PLAN_BEFORE_PAID) AS TOTAL_PLANS,
-  COUNT(DISTINCT pnc.ID_PHONE_NUMBER_CONTRACT) AS TOTAL_PHONE_NUMBERS,
-  SUM(pa.TOTAL_SMS) + SUM(pb.TOTAL_SMS) AS TOTAL_SMS_AVAILABLE,
-  SUM(pa.TOTAL_MINUTES) + SUM(pb.TOTAL_MINUTES) AS TOTAL_VOICE_CALLS_AVAILABLE,
-AVG(CASE WHEN ct.NAME = 'SMS' THEN t.MONEY_PER_UNIT ELSE NULL END) AS COST_PER_SMS,
-  AVG(CASE WHEN ct.NAME = 'VOZ' THEN t.MONEY_PER_UNIT ELSE NULL END) AS COST_PER_VOICE_CALL
-
+  COUNT(DISTINCT pnc.ID_PHONE_NUMBER_CONTRACT) AS TOTAL_PHONE_NUMBERS
 FROM
   CLIENT c
 LEFT JOIN CONTRACT con ON con.ID_CLIENT = c.ID_CLIENT
@@ -465,10 +453,6 @@ LEFT JOIN CONTRACT_AFTER_PAID cap ON cap.ID_CONTRACT = con.ID_CONTRACT
 LEFT JOIN CONTRACT_BEFORE_PAID cbp ON cbp.ID_CONTRACT = con.ID_CONTRACT
 LEFT JOIN PLAN_AFTER_PAID pa ON pa.ID_PLAN_AFTER_PAID = cap.ID_PLAN_AFTER_PAID
 LEFT JOIN PLAN_BEFORE_PAID pb ON pb.ID_PLAN_BEFORE_PAID = cbp.ID_PLAN_BEFORE_PAID
-LEFT JOIN PLAN_AFTER_PAID_TARRIF pat ON pat.ID_PLAN_AFTER_PAID = pa.ID_PLAN_AFTER_PAID
-LEFT JOIN PLAN_BEFORE_PAID_TARRIF pbt ON pbt.ID_PLAN_BEFORE_PAID = pb.ID_PLAN_BEFORE_PAID
-LEFT JOIN TARRIF t ON t.ID_TARRIF = COALESCE(pat.ID_TARRIF, pbt.ID_TARRIF)
-LEFT JOIN COMMUNICATION_TYPE ct ON ct.ID_COMMUNICATION_TYPE = t.ID_COMMUNICATION_TYPE
 GROUP BY
   c.ID_CLIENT,
   c.FULL_NAME;

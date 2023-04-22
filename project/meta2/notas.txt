@@ -1,19 +1,26 @@
-ver VIEW_B
- - esta qq coisa mal
-
 
 vista_i
-     tenho de inserir dados com planos com plafonds e chamadas nessa plano
+    INSERT INTO CONTRACT  (ID_CLIENT,PHONE_NUMBER,START_DATE,LOYALTY_DATE,END_DATE,DURATION)
+    VALUES(11,'932207163',sysdate,NULL,ADD_MONTHS(SYSDATE,12),365);
 
-vista_j
-    inserir dados nas campanhas para testar
+    INSERT INTO PHONE_NUMBER_CONTRACT (ID_CONTRACT,PHONE_NUMBER)
+    VALUES(241,'932207163')
 
+    INSERT INTO CONTRACT_AFTER_PAID (ID_CONTRACT,ID_PLAN_AFTER_PAID, ID_PHONE_NUMBER_CONTRACT)
+    values(241,4,241)
 
-VIEW_K_2021110042
-    duvidosa
-    
+    --UPDATE CLIENT_PHONE_NUMBER_CALL  SET CREATED_AT = ADD_MONTHS(sysdate, -24) WHERE ID_CLIENT = 11 
+
+DUAL:
+
+O DUAL é uma tabela especial de uma linha e uma coluna presente no Oracle Database. 
+Ela é usada principalmente para selecionar um valor ou realizar uma expressão, 
+função ou cálculo que não exige a consulta de dados em outras tabelas.
+
 VISTA_F
 - quantidade total de minutos das chamadas realizadas no mês
     anterior para destinos da rede fixa?
     (destinos de rede fixa!?!?) sabemos as redes dos destinos tambem? nao importa só quem está a ligar?
 
+- loayalty_period
+    eu meio que ignorei este campo e usei o end_date do contrato( nao sei se o loyalty_date e o end_date)
