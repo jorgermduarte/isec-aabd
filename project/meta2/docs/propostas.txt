@@ -1,0 +1,13 @@
+
+função (M_FUNC_2021110042):
+    uma função que retorne o total de minutos disponiveis gratuitos se o utilizador tiver plafond para um determinado mes e ano
+    se não tiver minutos disponiveis retorna 0
+
+procedimento (N_PROC_202110042):
+    um procedimento para atualizar os custos de chamadas que utilize a função M_FUNC_2021110042.
+    cria as faturas das chamadas.
+
+trigger(O_TRIG_2021110042):
+    quando existe uma alteração na tabela phone_number_call adicionar o historico na tabela phone_number_call_history.
+    isto permite ter todo o historico de alterações efetuadas na chamada.
+
