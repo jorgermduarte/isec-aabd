@@ -36,7 +36,11 @@ A simple xe oracle database instance to study PL/SQL.
     CDB$ROOT
 ```
 
-
+```
+    GRANT DBA TO ANONYMOUS;
+    ALTER USER anonymous ACCOUNT UNLOCK;
+    ALTER USER ANONYMOUS IDENTIFIED BY 123456;
+```
 
 ## Attachments
 
