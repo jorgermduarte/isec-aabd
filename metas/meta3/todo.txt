@@ -1,0 +1,3 @@
+- adicionar checks
+- adicionar tabela PeriodoFaturação e faturacao
+
