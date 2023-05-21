@@ -5,7 +5,7 @@ services:
       context: ./21.3.0/
       dockerfile: Dockerfile.xe
     volumes:
-       - ./data/oracle/oradata:/data/oracle/oradata # persistent oracle database data.
+       - C://Users/Duarte/Documents/Repositories-data:/data/oracle/oradata # persistent oracle database data.
     ports:
       - 1521:1521
       - 8080:8080

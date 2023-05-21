@@ -6,11 +6,11 @@
 - [x][ ]  b_custo_da_chamada
 - [x][ ]  c_preco_por_minuto
 - [x][ ]  d_tipo_de_chamada_voz
-- [x][ ]  e_numero_normalizado
-- [x][ ]  f_envia_SMS
+- [x][x]  e_numero_normalizado
+- [x][x]~  f_envia_SMS
 - [x][ ]  g_estabelece_chamada
 - [x][ ]  h_pode_realizar_a_chamada
-- [x][ ]  i_atualiza_saldo
+- [x][x]~  i_atualiza_saldo
 - [x][ ]  j_get_saldo
 - [x][ ]  k_novo_contrato
 - [x][ ]  l_carrega_cartao_prepago

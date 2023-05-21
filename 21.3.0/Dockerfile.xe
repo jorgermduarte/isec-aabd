@@ -53,6 +53,7 @@ ENV ORACLE_BASE=/opt/oracle \
     ORACLE_DOCKER_INSTALL="true" \
     CHECKPOINT_FILE_EXTN=".created"
 
+ENV ORACLE_SGA_TARGET=2048M
 # Use second ENV so that variable get substituted
 ENV PATH=$ORACLE_HOME/bin:$PATH
 
