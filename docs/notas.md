@@ -13,7 +13,7 @@
 - [x][x]~  i_atualiza_saldo
 - [x][ ]  j_get_saldo
 - [x][ ]  k_novo_contrato
-- [x][ ]  l_carrega_cartao_prepago
+- [x][x]  l_carrega_cartao_prepago
 - [ ][ ]  M_FUNC_2021xxxx
 - [ ][ ]  N_PROC_2021xxxx
 - [ ][x]  o_trig_2021110042
