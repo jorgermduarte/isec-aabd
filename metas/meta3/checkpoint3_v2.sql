@@ -287,21 +287,93 @@ DECLARE
 	v_old_balance NUMBER;
 	v_new_balance NUMBER;
 BEGIN
-	
+
   IF :NEW.PROCESSED = 0 THEN
-  
+
 	SELECT pnb.VALUE INTO v_old_balance FROM PHONE_NUMBER_BALANCE pnb 
   	WHERE pnb.ID_CONTRACT = :NEW.ID_CONTRACT AND pnb.ID_PHONE_NUMBER_CONTRACT = :NEW.ID_PHONE_NUMBER_CONTRACT;
-  
+
   	v_new_balance := v_old_balance + :NEW.VALUE;
-  
-  	UPDATE PHONE_NUMBER_BALANCE pnb 
+
+  	UPDATE PHONE_NUMBER_BALANCE pnb
   	SET pnb.VALUE = v_new_balance
 	WHERE pnb.ID_CONTRACT = :NEW.ID_CONTRACT AND pnb.ID_PHONE_NUMBER_CONTRACT = :NEW.ID_PHONE_NUMBER_CONTRACT;
-  
+
   END IF;
 EXCEPTION
   WHEN OTHERS THEN
     RAISE;
 END;
 
+
+CREATE OR REPLACE FUNCTION b_custo_da_chamada(idChamada NUMBER)
+RETURN NUMBER IS
+    v_custo NUMBER;
+    v_duracao NUMBER;
+    v_tipo_plano NUMBER;
+    V_id_phone_number_contract NUMBER;
+    v_id_tarifa NUMBER;
+    v_tipo_tarifario NUMBER :=0;
+BEGIN
+
+    SELECT duration INTO v_duracao
+    FROM CLIENT_PHONE_NUMBER_CALL
+    WHERE ID_CALL = idChamada;
+
+   	-- vamos buscar o phone number contract
+    SELECT ID_PHONE_NUMBER_CONTRACT  INTO V_id_phone_number_contract
+    FROM CLIENT_PHONE_NUMBER_CALL
+    WHERE ID_CALL = idChamada;
+
+   -- vamos buscar o plano pre-pago associado ao numero de telemovel
+    SELECT ID_PLAN_AFTER_PAID INTO v_tipo_plano
+    FROM CONTRACT_AFTER_PAID
+    WHERE ID_PHONE_NUMBER_CONTRACT = V_id_phone_number_contract;
+
+   -- se não existe plano pre-pago associado ao numero de tleemovel, vamos ver se existe pos pago
+    IF v_tipo_plano IS NULL THEN
+    	-- definimos que o tipo de tarifario é o pos pago
+    	v_tipo_tarifario := 1;
+        SELECT ID_PLAN_BEFORE_PAID INTO v_tipo_plano
+        FROM CONTRACT_BEFORE_PAID
+        WHERE ID_PHONE_NUMBER_CONTRACT = V_id_phone_number_contract;
+    END IF;
+
+   -- se existir plano
+    IF v_tipo_plano IS NOT NULL THEN
+
+    	-- vamos selecionar a tarifa correta do pre-pago
+    	IF v_tipo_tarifario = 0 THEN
+            SELECT ID_TARRIF INTO v_id_tarifa
+            FROM PLAN_BEFORE_PAID_TARRIF
+            WHERE ID_PLAN_BEFORE_PAID = v_tipo_plano;
+    	END IF;
+
+    	-- vamos selecionar a tarifa correta do pos pago
+    	IF v_tipo_tarifario = 1 THEN
+	        SELECT ID_TARRIF INTO v_id_tarifa
+        	FROM PLAN_AFTER_PAID_TARRIF
+        	WHERE ID_PLAN_AFTER_PAID = v_tipo_plano;
+    	END IF;
+
+    	-- se existir entao a tarifa vamos buscar o preço unitario das chamadas do determinado tarifario
+        IF v_id_tarifa IS NOT NULL THEN
+            SELECT MONEY_PER_UNIT INTO v_custo
+            FROM TARRIF
+            WHERE ID_TARRIF = v_id_tarifa AND
+            ID_UNIT_TYPE = (SELECT tut.ID_TARRIF_UNIT_TYPE FROM TARRIF_UNIT_TYPE tut WHERE UPPER(TUT.NAME) = 'MINUTO');
+
+        ELSE
+            RAISE_APPLICATION_ERROR(-20503, 'Tarifário inexistente.');
+        END IF;
+    ELSE
+        RAISE_APPLICATION_ERROR(-20516, 'Plano inexistente.');
+    END IF;
+
+    RETURN v_custo * v_duracao;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20599, 'Falha ao encontrar dados de referencia da chamada');
+    WHEN OTHERS THEN
+        RAISE_APPLICATION_ERROR(-20599, 'Algo correu mal');
+END;

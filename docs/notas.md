@@ -3,7 +3,7 @@
 ## checkpoint 3
 
 - [x][ ]  a_emite_fatura
-- [x][ ]  b_custo_da_chamada
+- [x][x]  b_custo_da_chamada
 - [x][ ]  c_preco_por_minuto
 - [x][x]  d_tipo_de_chamada_voz
 - [x][x]  e_numero_normalizado
