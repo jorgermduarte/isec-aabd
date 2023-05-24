@@ -377,3 +377,68 @@ EXCEPTION
     WHEN OTHERS THEN
         RAISE_APPLICATION_ERROR(-20599, 'Algo correu mal');
 END;
+
+
+CREATE OR REPLACE FUNCTION M_FUNC_2021110042_get_phone_number_contract_id (num_de_origem NVARCHAR2) RETURN NUMBER
+IS 
+   	v_num_origem_normalizado NVARCHAR2;
+    id_phone_number_contract NUMBER;
+BEGIN 
+	-- numero normalizado
+	v_num_origem_normalizado := e_numero_normalizado(num_de_origem);
+
+	-- vamos buscar o phone_number_contract_id atraves do numero de telemovel
+	SELECT pnc.ID_PHONE_NUMBER_CONTRACT INTO id_phone_number_contract
+		FROM PHONE_NUMBER_CONTRACT pnc 
+	WHERE pnc.PHONE_NUMBER = v_num_origem_normalizado;
+
+
+    RETURN id_phone_number_contract;
+
+	EXCEPTION 
+		WHEN NO_DATA_FOUND THEN
+			 RAISE_APPLICATION_ERROR(-20509, 'Contrato inexistente.');
+		WHEN OTHERS THEN
+			 RAISE_APPLICATION_ERROR(-20599, 'Algo correu mal');
+END;
+
+
+CREATE OR REPLACE FUNCTION h_pode_realizar_a_chamada(num_de_origem NVARCHAR2, num_de_destino NVARCHAR2) RETURN NVARCHAR2
+IS
+    v_rede_destino NUMBER;
+   	v_status_origem NUMBER;
+    v_phone_number_contract_id NUMBER;
+   	v_num_origem_normalizado NVARCHAR2;
+    v_num_destino_normalizado NVARCHAR2;
+BEGIN
+
+	-- normalizar dados
+	v_num_origem_normalizado := e_numero_normalizado(num_de_origem);
+	v_num_destino_normalizado := e_numero_normalizado(num_de_destino);
+
+	-- vamos buscar o phone_number_contract_id atraves do numero de telemovel
+	v_phone_number_contract_id := M_FUNC_2021110042_get_phone_number_contract_id(v_num_origem_normalizado);
+
+	BEGIN
+	    -- Verifica se o número de origem está disponivel
+	    SELECT pns.STATUS_TYPE INTO v_status_origem 
+	    FROM PHONE_NUMBER_STATUS pns
+	    JOIN PHONE_NUMBER_STATUS_TYPE pnst ON pns.STATUS_TYPE=pnst.ID_PHONE_NUMBER_STATUS 
+	    WHERE pns.ID_PHONE_NUMBER_CONTRACT = v_phone_number_contract_id
+	    EXCEPTION
+	    WHEN NO_DATA_FOUND THEN
+	    	 RAISE_APPLICATION_ERROR(-20508, 'Número de origem não encontrado ou não disponivel');
+   	END;
+   	-- TODO: ver se o numero de origem tem saldo
+
+    -- Retorna o tipo de rede do número de destino
+    v_rede_destino = d_tipo_de_chamada_voz(v_num_destino_normalizado);
+
+   -- vamos retornar o nome do tipo de rede destino como é dado no requisito
+     RETURN v_rede_destino;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20508, 'Número de origem ou destino não encontrado');
+    WHEN TOO_MANY_ROWS THEN
+        RAISE_APPLICATION_ERROR(-20511, 'Mais de um número de origem ou destino encontrado');
+END;
