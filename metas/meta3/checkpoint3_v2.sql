@@ -442,3 +442,95 @@ EXCEPTION
     WHEN TOO_MANY_ROWS THEN
         RAISE_APPLICATION_ERROR(-20511, 'Mais de um número de origem ou destino encontrado');
 END;
+
+
+
+CREATE OR REPLACE FUNCTION j_get_saldo (numero VARCHAR, tipo VARCHAR DEFAULT 'valor') 
+RETURN NUMBER 
+IS
+  v_saldo NUMBER;
+  v_normalized_phone_number VARCHAR;
+  v_phone_number_contract NUMBER;
+  
+BEGIN
+	
+	BEGIN 
+		-- vai buscar o numero normalizado
+		v_normalized_phone_number := e_numero_normalizado(numero);
+	
+	    -- vamos buscar o id do contrato
+	   	v_phone_number_contract := M_FUNC_2021110042_get_phone_number_contract_id(v_normalized_phone_number);
+	   
+	   EXCEPTION
+	   	WHEN OTHERS THEN 
+	   		RAISE_APPLICATION_ERROR(-20509,'Contrato inexistente.');
+	END;
+	
+  IF tipo = 'valor' THEN
+  	SELECT pnb.VALUE INTO v_saldo FROM PHONE_NUMBER_BALANCE pnb 
+    WHERE pnb.ID_PHONE_NUMBER_CONTRACT  = v_phone_number_contract;
+  ELSIF tipo = 'voz' THEN
+	v_saldo := -1;
+    -- todo - implement this
+  ELSIF tipo = 'SMS' THEN
+  	v_saldo := -1;  
+    -- todo - implement this
+  ELSE
+    RAISE_APPLICATION_ERROR(-20519, 'Tipo de saldo inválido');
+  END IF;
+ 
+  RETURN v_saldo;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    RAISE_APPLICATION_ERROR(-20501, 'Número de telefone inexistente');
+  WHEN OTHERS THEN
+    RAISE_APPLICATION_ERROR(-20502, 'Inválido Número de telefone');
+END;
+
+
+CREATE OR REPLACE FUNCTION c_preco_por_minuto(p_origem_phone_number VARCHAR2, p_destino_phone_number VARCHAR2) 
+RETURN NUMBER IS 
+	v_preco_por_minuto NUMBER(10,3); 
+	v_id_origem_contract NUMBER(10); 
+	v_id_destino_network NUMBER(10); 
+ 
+  	v_normalized_origin_phone NVARCHAR2;
+  	v_normalized_destiny_phone NVARCHAR2;
+ 	v_phone_number_contract NUMBER;
+ 
+    v_network_destiny_number NUMBER;
+
+BEGIN 
+	-- get normalized phone numbers
+	v_normalized_origin_phone := e_numero_normalizado(p_origem_phone_number);
+	v_normalized_destiny_phone := e_numero_normalizado(p_destino_phone_number);
+
+	
+	-- vamos buscar o id do contrato
+	v_phone_number_contract := M_FUNC_2021110042_get_phone_number_contract_id(v_normalized_origin_phone);
+
+	-- vamos buscar a rede do numero destino
+	v_network_destiny_number:= d_tipo_de_chamada_voz(v_normalized_destiny_phone);
+  
+	
+
+	SELECT MONEY_PER_UNIT INTO v_preco_por_minuto FROM TARRIF t 
+	INNER JOIN PLAN_AFTER_PAID_TARRIF papt ON t.ID_TARRIF =PAPT.ID_TARRIF
+	INNER JOIN CONTRACT_AFTER_PAID cap ON PAPT.ID_PLAN_AFTER_PAID = cap.ID_PLAN_AFTER_PAID 
+	WHERE cap.ID_PHONE_NUMBER_CONTRACT =v_phone_number_contract
+	AND T.ID_COMMUNICATION_TYPE = (SELECT ct.ID_COMMUNICATION_TYPE  FROM COMMUNICATION_TYPE ct WHERE UPPER(ct.NAME) = 'VOZ' )
+	AND t.ID_NETWORK = v_network_destiny_number;
+
+
+  	RETURN v_preco_por_minuto; 
+
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN 
+      RAISE_APPLICATION_ERROR(-20501,'Erro: Não foi possível encontrar dados');
+    WHEN TOO_MANY_ROWS THEN
+      RAISE_APPLICATION_ERROR(-20502,'Erro: Mais de uma linha retornada');
+    WHEN OTHERS THEN
+      RAISE_APPLICATION_ERROR(-20510,'Erro: Outro erro ocorreu');
+END; 
+
+
