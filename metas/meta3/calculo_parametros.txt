@@ -1,0 +1,114 @@
+Parâmetro	Valor
+Nome da Tabela	SMS_HISTORY
+Número de Registos	1,800,000 (estimado)
+PCTFREE	1%
+PCTUSED	99%
+Tamanho Médio do registo	37 bytes (estimado)
+Tamanho do Bloco	4096 bytes (padrão Oracle)
+Espaço Livre no Bloco	3964 bytes (calculado)
+Número de Registos por Bloco	107 (calculado)
+Número de Blocos	16823 (calculado)
+Espaço Inicial da Tabela	~68.57 MB (calculado)
+
+
+ESPAÇO LIVRE NO BLOCO (E.L.B.) = Tamanho do Bloco * (100 - PCTFREE) / 100 - Header Fixo = 4096 bytes * (100 - 1) / 100 - 84 bytes = 3964 bytes
+
+Nº DE REGISTOS POR BLOCO (N.R.B.) = Espaço Livre do Bloco / Tamanho Médio do Registo = 3964 bytes / 37 bytes = ~107.14 (vamos arredondar para baixo para 107 Registos)
+
+Nº DE BLOCOS (N.B.) = Nº Registos Existentes / Nº de Registos por Bloco = 1.800.000 / 107 = ~16822.43 blocos (arredondar para cima para 16823 blocos)
+
+ESPAÇO INICIAL DA TABELA (E.I.T.) = Nº Blocos * Tamanho do Bloco = 16823 * 4096 bytes = ~68.57 MB
+
+
+
+
+Parâmetro	Valor
+Nome da Tabela	CLIENT_PHONE_NUMBER_CALL_HISTORY
+Número de Registos	10,000,000 (estimado)
+PCTFREE	1%
+PCTUSED	99%
+Tamanho Médio do registo	67 bytes (estimado)
+Tamanho do Bloco	4096 bytes (padrão Oracle)
+Espaço Livre no Bloco	3964 bytes (calculado)
+Número de Registos por Bloco	59 (calculado)
+Número de Blocos	169492 (calculado)
+Espaço Inicial da Tabela	~694.56 MB (calculado)
+
+
+ESPAÇO LIVRE NO BLOCO (E.L.B.) = Tamanho do Bloco * (100 - PCTFREE) / 100 - Header Fixo = 4096 bytes * (100 - 1) / 100 - 84 bytes = 3964 bytes
+
+Nº DE REGISTOS POR BLOCO (N.R.B.) = Espaço Livre do Bloco / Tamanho Médio do Registo = 3964 bytes / 67 bytes = ~59.16 (vamos arredondar para baixo para 59 Registos)
+
+Nº DE BLOCOS (N.B.) = Nº Registos Existentes / Nº de Registos por Bloco = 10.000.000 / 59 = ~169491.53 blocos (arredondar para cima para 169492 blocos)
+
+ESPAÇO INICIAL DA TABELA (E.I.T.) = Nº Blocos * Tamanho do Bloco = 169492 * 4096 bytes = ~694.56 MB
+
+
+
+Parâmetro	Valor
+Nome da Tabela	CONTRACT
+Número de Registos	800,000 (estimado)
+PCTFREE	10%
+PCTUSED	90%
+Tamanho Médio do registo	91 bytes (estimado)
+Tamanho do Bloco	4096 bytes (padrão Oracle)
+Espaço Livre no Bloco	3612 bytes (calculado)
+Número de Registos por Bloco	39 (calculado)
+Número de Blocos	20513 (calculado)
+Espaço Inicial da Tabela	~84.05 MB (calculado)
+
+
+ESPAÇO LIVRE NO BLOCO (E.L.B.) = Tamanho do Bloco * (100 - PCTFREE) / 100 - Header Fixo = 4096 bytes * (100 - 10) / 100 - 84 bytes = 3612 bytes
+
+Nº DE REGISTOS POR BLOCO (N.R.B.) = Espaço Livre do Bloco / Tamanho Médio do Registo = 3612 bytes / 91 bytes = ~39.69 (vamos arredondar para baixo para 39 Registos)
+
+Nº DE BLOCOS (N.B.) = Nº Registos Existentes / Nº de Registos por Bloco = 800,000 / 39 = ~20512.82 blocos (arredondar para cima para 20513 blocos)
+
+ESPAÇO INICIAL DA TABELA (E.I.T.) = Nº Blocos * Tamanho do Bloco = 20513 * 4096 bytes = ~84.05 MB
+
+
+
+Parâmetro	Valor
+Nome da Tabela	CLIENT
+Número de Registos	700,000 (estimado)
+PCTFREE	10%
+PCTUSED	90%
+Tamanho Médio do registo	536 bytes (estimado)
+Tamanho do Bloco	4096 bytes (padrão Oracle)
+Espaço Livre no Bloco	3612 bytes (calculado)
+Número de Registos por Bloco	6 (calculado)
+Número de Blocos	116667 (calculado)
+Espaço Inicial da Tabela	~478 MB (calculado)
+
+
+ESPAÇO LIVRE NO BLOCO (E.L.B.) = Tamanho do Bloco * (100 - PCTFREE) / 100 - Header Fixo = 4096 bytes * (100 - 10) / 100 - 84 bytes = 3612 bytes
+
+Nº DE REGISTOS POR BLOCO (N.R.B.) = Espaço Livre do Bloco / Tamanho Médio do Registo = 3612 bytes / 536 bytes = ~6.73 (vamos arredondar para baixo para 6 Registos)
+
+Nº DE BLOCOS (N.B.) = Nº Registos Existentes / Nº de Registos por Bloco = 700,000 / 6 = ~116666.67 blocos (arredondar para cima para 116667 blocos)
+
+ESPAÇO INICIAL DA TABELA (E.I.T.) = Nº Blocos * Tamanho do Bloco = 116667 * 4096 bytes = ~478 MB
+
+
+
+
+Parâmetro	Valor
+Nome da Tabela	PHONE_NUMBER_CONTRACT
+Número de Registros	800,000 (estimado)
+PCTFREE	10%
+PCTUSED	90%
+Tamanho Médio do Registro	74 bytes (estimado)
+Tamanho do Bloco	4096 bytes (padrão Oracle)
+Espaço Livre no Bloco	3612 bytes (calculado)
+Número de Registros por Bloco	48 (calculado)
+Número de Blocos	16667 (calculado)
+Espaço Inicial da Tabela	~68.36 MB (calculado)
+
+
+ESPAÇO LIVRE NO BLOCO (E.L.B.) = Tamanho do Bloco * (100 - PCTFREE) / 100 - Header Fixo = 4096 bytes * (100 - 10) / 100 - 84 bytes = 3612 bytes
+
+Nº DE REGISTOS POR BLOCO (N.R.B.) = Espaço Livre do Bloco / Tamanho Médio do Registo = 3612 bytes / 74 bytes = ~48.81 (vamos arredondar para baixo para 48 registros)
+
+Nº DE BLOCOS (N.B.) = Nº Registos Existentes / Nº de Registos por Bloco = 800,000 / 48 = ~16666.67 blocos (arredondar para cima para 16667 blocos)
+
+ESPAÇO INICIAL DA TABELA (E.I.T.) = Nº Blocos * Tamanho do Bloco = 16667 * 4096 bytes = ~68.36 MB

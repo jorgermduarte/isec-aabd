@@ -17,5 +17,5 @@
 - [-][x]  M_FUNC_2021xxxx get_phone_number_contract_id
 - [-][x]  o_trig_2021110042
 - [ ][ ]  N_PROC_2021xxxx
-- [ ][ ]  Identifique os mecanismos necessários para assegurar a integridade dos dados que não seja assegurada por restrições da BD, incluindo as restrições de valor (ex. duração e custo negativo), datas inválidas (termino anterior ao inicio)
-- [ ][ ] Entrega do cálculo dos parâmetros físicos das 5 tabelas do sistema, que considerem que irão ocupar mais espaço.
+- [-][x]  Identifique os mecanismos necessários para assegurar a integridade dos dados que não seja assegurada por restrições da BD, incluindo as restrições de valor (ex. duração e custo negativo), datas inválidas (termino anterior ao inicio)
+- [-][x] Entrega do cálculo dos parâmetros físicos das 5 tabelas do sistema, que considerem que irão ocupar mais espaço.

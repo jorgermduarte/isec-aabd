@@ -1,0 +1,44 @@
+### alguns mecanismos são baseados no uso de restrições, triggers, stored procedures e funções.
+
+
+## Triggers
+
+- Os triggers são procedimentos armazenados que são executados automaticamente quando ocorre uma 
+modificação específica na base de dados, como uma inserção, atualização ou exclusão.
+
+
+## Restrições
+
+- restrições de check podem ser usadas para limitar os tipos de dados que podem ser inseridos numa tabela.
+
+## Stored procedures e funções
+
+- stored procedures e funções são blocos de código SQL que são armazenados na base de dados e podem
+ser invocados de dentro da base de dados. Estes blocos podem implementar regras de negocio mais complexas
+que podem não ser facilmente expressas por restrições ou triggers.
+
+## Transações
+
+- transações garantem que um conjunto de operações seja realizado completamente ou não seja realizado
+de todo.
+
+
+## Restrições de chaves estrangeiras (FK)
+
+- Podem ser usadas para garantir que as relações entre as tabelas sejam mantidas
+
+
+
+## Exemplos onde estes mecanismos podem ser implementados na base de dados
+
+- trigger na tabela contract para garantir que o loyalty_date seja sempre maior que o start_date.
+
+- restrição de check na tabela contract para garantir que **duration** seja sempre um valor positivo.
+
+- Usar uma stored procedure ao inserir ou atualizar na tabela PHONE_NUMBER_CONTRACT para garantir que o número do telefone seja válido, usando uma função que valida o numero de telemovel.
+
+- Usar restrições de chave estrangeira na tabela PHONE_NUMBER_CONTRACT_CANCELLATION para garantir que um registo correspondente exista na tabela PHONE_NUMBER_CONTRACT.
+
+- Usar restrições de check em tabelas como na COMMUNICATION_TYPE ( voz,sms) ou até na TARRIF_UNIT_TYPE.
+
+
