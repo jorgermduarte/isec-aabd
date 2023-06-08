@@ -78,6 +78,7 @@ CREATE OR REPLACE PROCEDURE f_envia_SMS (
    	contract_id NUMBER := 0;
     client_id NUMBER := 0;
    	status_id NUMBER := 0;
+    v_num_saldo NUMBER := 0;
 
 BEGIN
 	-- normalizar o numero de origem e de destino
@@ -107,7 +108,10 @@ BEGIN
 	SELECT sst.ID INTO status_id FROM SMS_STATUS_TYPE sst
 	WHERE UPPER(sst.NAME) = 'SENDING';
 
-   -- TODO: j_get_saldo, se nao tiver saldo lança excepcao -20508 Telefone sem saldo.
+    v_num_saldo := j_get_saldo(normalized_origin_number,'valor');
+    IF v_num_saldo = 0 THEN
+        RAISE_APPLICATION_ERROR(-20508, 'Telefone sem saldo.');
+    END IF;
 
    -- TODO: -20511 Número inativo.
 
@@ -162,9 +166,8 @@ BEGIN
         RAISE_APPLICATION_ERROR(-20507, 'Serviço indisponível.');
     END IF;
 
-    -- Vamos buscar a rede associada ao número de telefone
-    -- TODO: ir ao plano de um número de telefone, buscar o seu tarifario que por sua vez tem o id_network e associar aqui
-    v_id_network := 0;
+
+    v_id_network := d_tipo_de_chamada_voz(v_phone_number_destiny_normalized);
 
     -- registar a chamada
     INSERT INTO CLIENT_PHONE_NUMBER_CALL(
@@ -410,6 +413,7 @@ IS
     v_phone_number_contract_id NUMBER;
    	v_num_origem_normalizado NVARCHAR2;
     v_num_destino_normalizado NVARCHAR2;
+    v_num_saldo NUMBER;
 BEGIN
 
 	-- normalizar dados
@@ -429,7 +433,11 @@ BEGIN
 	    WHEN NO_DATA_FOUND THEN
 	    	 RAISE_APPLICATION_ERROR(-20508, 'Número de origem não encontrado ou não disponivel');
    	END;
-   	-- TODO: ver se o numero de origem tem saldo
+
+    v_num_saldo := j_get_saldo(v_num_origem_normalizado,'valor');
+    IF v_num_saldo < 1 THEN
+    	RAISE_APPLICATION_ERROR(-20510, 'Saldo insuficiente');
+    END IF;
 
     -- Retorna o tipo de rede do número de destino
     v_rede_destino = d_tipo_de_chamada_voz(v_num_destino_normalizado);
