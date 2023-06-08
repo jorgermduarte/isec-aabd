@@ -94,20 +94,20 @@ ESPAÇO INICIAL DA TABELA (E.I.T.) = Nº Blocos * Tamanho do Bloco = 116667 * 40
 
 Parâmetro	Valor
 Nome da Tabela	PHONE_NUMBER_CONTRACT
-Número de Registros	800,000 (estimado)
+Número de registos	800,000 (estimado)
 PCTFREE	10%
 PCTUSED	90%
-Tamanho Médio do Registro	74 bytes (estimado)
+Tamanho Médio do registo	74 bytes (estimado)
 Tamanho do Bloco	4096 bytes (padrão Oracle)
 Espaço Livre no Bloco	3612 bytes (calculado)
-Número de Registros por Bloco	48 (calculado)
+Número de registos por Bloco	48 (calculado)
 Número de Blocos	16667 (calculado)
 Espaço Inicial da Tabela	~68.36 MB (calculado)
 
 
 ESPAÇO LIVRE NO BLOCO (E.L.B.) = Tamanho do Bloco * (100 - PCTFREE) / 100 - Header Fixo = 4096 bytes * (100 - 10) / 100 - 84 bytes = 3612 bytes
 
-Nº DE REGISTOS POR BLOCO (N.R.B.) = Espaço Livre do Bloco / Tamanho Médio do Registo = 3612 bytes / 74 bytes = ~48.81 (vamos arredondar para baixo para 48 registros)
+Nº DE REGISTOS POR BLOCO (N.R.B.) = Espaço Livre do Bloco / Tamanho Médio do Registo = 3612 bytes / 74 bytes = ~48.81 (vamos arredondar para baixo para 48 registos)
 
 Nº DE BLOCOS (N.B.) = Nº Registos Existentes / Nº de Registos por Bloco = 800,000 / 48 = ~16666.67 blocos (arredondar para cima para 16667 blocos)
 

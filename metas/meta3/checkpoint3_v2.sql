@@ -534,3 +534,148 @@ BEGIN
 END; 
 
 
+
+CREATE OR REPLACE FUNCTION f_aux_get_plan_id_by_phone_number
+(
+	phone_number_contract NUMBER
+)
+RETURN NUMBER
+IS
+	v_id_plano NUMBER;
+	v_tipo_plano NUMBER := 0; -- pre-pago BY DEFAULT
+BEGIN
+    BEGIN
+        -- vamos buscar o plano pre-pago associado ao numero de telemovel
+        SELECT ID_PLAN_AFTER_PAID INTO v_id_plano
+        FROM CONTRACT_AFTER_PAID
+        WHERE ID_PHONE_NUMBER_CONTRACT = phone_number_contract;
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+        -- se não existe plano pre-pago associado ao numero de tleemovel, vamos ver se existe pos pago
+        v_tipo_plano := 1;
+        SELECT ID_PLAN_BEFORE_PAID INTO v_id_plano
+        FROM CONTRACT_BEFORE_PAID
+        WHERE ID_PHONE_NUMBER_CONTRACT = phone_number_contract;
+    END;
+
+   -- se existir plano
+    IF v_id_plano IS NOT NULL THEN
+		RETURN v_id_plano;
+    ELSE
+        RAISE_APPLICATION_ERROR(-20516, 'Plano inexistente.');
+    END IF;
+END;
+
+
+CREATE OR REPLACE FUNCTION f_aux_get_plan_type_by_phone_number
+(
+	phone_number_contract NUMBER
+)
+RETURN NVARCHAR2
+IS
+	v_id_plano NUMBER;
+	v_tipo_plano NVARCHAR2 := 'pre-pago'; -- pre-pago BY DEFAULT
+BEGIN
+    BEGIN
+        -- vamos buscar o plano pre-pago associado ao numero de telemovel
+        SELECT ID_PLAN_AFTER_PAID INTO v_id_plano
+        FROM CONTRACT_AFTER_PAID
+        WHERE ID_PHONE_NUMBER_CONTRACT = phone_number_contract;
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+        -- se não existe plano pre-pago associado ao numero de tleemovel, vamos ver se existe pos pago
+        v_tipo_plano := 'pos-pago';
+        SELECT ID_PLAN_BEFORE_PAID INTO v_id_plano
+        FROM CONTRACT_BEFORE_PAID
+        WHERE ID_PHONE_NUMBER_CONTRACT = phone_number_contract;
+    END;
+
+   -- se existir plano
+    IF v_id_plano IS NOT NULL THEN
+		RETURN v_tipo_plano;
+    ELSE
+        RAISE_APPLICATION_ERROR(-20516, 'Plano inexistente.');
+    END IF;
+END;
+
+
+
+CREATE OR REPLACE PROCEDURE a_emite_fatura (
+    p_telefone varchar2,
+    p_ano_mes varchar2
+) AS
+	v_telefone_normalized varchar2;
+    v_id_phone_number_contract NUMBER;
+   	v_type_plan NVARCHAR2;
+    v_id_plano NUMBER;
+    v_id_invoice NUMBER := 0;
+    v_existe_fatura NUMBER;
+    v_total_a_pagar NUMBER;
+	v_total_calls NUMBER := 0; -- Declare a variável aqui
+BEGIN
+	-- normalized the phone number
+	v_telefone_normalized := e_numero_normalizado(p_telefone);
+
+	-- get the id plan from the id_phone_number_contract
+	v_id_phone_number_contract := M_FUNC_2021110042_get_phone_number_contract_id(v_telefone_normalized);
+
+	-- get the plan type
+	v_type_plan := f_aux_get_plan_type_by_phone_number(v_id_phone_number_contract);
+	
+	-- get the plan id
+	v_id_plano := f_aux_get_plan_id_by_phone_number(v_id_phone_number_contract);
+
+	-- verify if there's already a invoice date associated to the phone number
+	SELECT count(*) INTO v_existe_fatura
+	FROM INVOICE i
+	WHERE i.ID_PHONE_NUMBER_CONTRACT = v_id_phone_number_contract
+	AND TO_CHAR(i.invoice_date, 'YYYY-MM') = p_ano_mes;
+	
+	IF v_existe_fatura = 0 THEN
+		-- Insert a new invoice
+		INSERT INTO INVOICE (ID_PHONE_NUMBER_CONTRACT, ID_CLIENT, VALUE)
+		VALUES (v_id_phone_number_contract, (SELECT ID_CLIENT FROM PHONE_NUMBER_CONTRACT WHERE ID_PHONE_NUMBER_CONTRACT = v_id_phone_number_contract), v_total_a_pagar)
+		RETURNING ID_INVOICE INTO v_id_invoice;
+		
+		-- Insert into INVOICE_RELLATION
+		INSERT INTO INVOICE_RELLATION (ID_INVOICE, ID_INVOICE_SMS)
+		VALUES ( v_id_invoice,
+		(SELECT ins.ID_INVOICE_SMS FROM INVOICE_SMS ins
+		WHERE TO_CHAR(ins.INVOICE_DATE,'YYYY-MM') = p_ano_mes
+		AND ins.ID_PHONE_NUMBER_CONTRACT = v_id_phone_number_contract));
+
+		INSERT INTO INVOICE_RELLATION (ID_INVOICE, ID_INVOICE_CALL)
+		VALUES(v_id_invoice,
+			(SELECT inc.ID_INVOICE_CALL FROM INVOICE_CALL inc
+			WHERE TO_CHAR(inc.INVOICE_DATE,'YYYY-MM') = p_ano_mes
+		AND inc.ID_PHONE_NUMBER_CONTRACT = v_id_phone_number_contract));
+
+		-- Update the total
+		SELECT SUM(ins.VALUE) 
+		INTO v_total_a_pagar 
+		FROM INVOICE_SMS ins
+		WHERE ins.ID_INVOICE_SMS IN(
+			SELECT ir.ID_INVOICE_SMS  FROM INVOICE_RELLATION ir
+			WHERE ir.ID_INVOICE = v_id_invoice AND ir.ID_INVOICE_SMS IS NOT NULL
+		);
+		
+		-- Add the cost of INVOICE_CALL
+		SELECT SUM(inc.VALUE)
+		INTO v_total_calls
+		FROM INVOICE_CALL inc
+		WHERE inc.ID_INVOICE_CALL IN (
+			SELECT ir.ID_INVOICE_CALL  FROM INVOICE_RELLATION ir
+			WHERE ir.ID_INVOICE = v_id_invoice AND ir.ID_INVOICE_CALL IS NOT NULL
+		);
+		
+		-- Add the total calls to the total
+		v_total_a_pagar := v_total_a_pagar + v_total_calls;
+
+		-- Update the invoice value
+		UPDATE INVOICE
+		SET VALUE = v_total_a_pagar
+		WHERE ID_INVOICE = v_id_invoice;
+	
+    ELSE
+    	RAISE_APPLICATION_ERROR(-20501, 'A fatura para o período informado já existe.');
+    END IF;
+    
+END;
